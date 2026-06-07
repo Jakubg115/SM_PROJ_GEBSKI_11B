@@ -4,5 +4,4 @@ import java.util.LinkedList;
 
 public interface StaticObjects {
     LinkedList<String> queue=new LinkedList<>();
-
 }

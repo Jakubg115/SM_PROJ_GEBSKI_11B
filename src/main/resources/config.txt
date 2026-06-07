@@ -1,0 +1,4 @@
+MainDir: src/main/resources/music
+Width: 800.0
+Height: 600.0
+Theme: bright

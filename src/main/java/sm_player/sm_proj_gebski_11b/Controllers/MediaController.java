@@ -1,4 +1,4 @@
-package sm_player.sm_proj_gebski_11b;
+package sm_player.sm_proj_gebski_11b.Controllers;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.*;

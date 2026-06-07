@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MainPane" maxHeight="600.0" maxWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.MediaController">
+<AnchorPane fx:id="MainPane" maxHeight="600.0" maxWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.MediaController">
    <children>
       <AnchorPane layoutX="300.0" layoutY="400.0" prefHeight="150.0" prefWidth="800.0" style="-fx-background-color: #cccccc; -fx-border-color: #b3b3b3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>

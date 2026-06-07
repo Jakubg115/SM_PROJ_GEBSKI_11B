@@ -1,0 +1,36 @@
+#sidePanel{
+    -fx-background-color: #e6e6e6;
+    -fx-border-color:lightgray;
+}
+.button{
+    -fx-background-insets:0;
+    -fx-background-radius:0;
+}
+.MainButtons:hover{
+    -fx-background-color: #d1d0d0;
+}
+.MainButtons:pressed{
+    -fx-background-color: #b1b1b1;
+}
+.windowButtons{
+    -fx-background-color:inherit;
+}
+#minim:hover,#maxim:hover{
+    -fx-background-color:#d1d0d0;
+}
+#minim:pressed,#maxim:pressed{
+    -fx-background-color: #b1b1b1;
+}
+#closin:hover{
+    -fx-background-color:red;
+}
+#closin:pressed{
+    -fx-background-color: #bc0000;
+}
+.mainPane{
+    -fx-background-color: #e3e3e3;
+    -fx-border-color:lightgray;
+}
+.Icons{
+    -fx-fill:red;
+}

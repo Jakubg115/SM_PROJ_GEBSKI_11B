@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="windowPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.LibraryController">
+   <children>
+      <VBox fx:id="sidePanel" layoutX="83.0" layoutY="118.0" prefWidth="250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#toMainPage" prefWidth="200.0" styleClass="MainButtons" VBox.vgrow="NEVER">
+               <children>
+                  <FontAwesomeIconView glyphName="HOME" size="25" styleClass="Icons">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label text="Strona Główna">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="50.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#toLibraryPage" prefWidth="200.0" styleClass="MainButtons" VBox.vgrow="NEVER">
+               <children>
+                  <FontAwesomeIconView glyphName="MUSIC" size="25" styleClass="Icons">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label text="Przegląd Bibliotek">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin></Separator>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#toQueuePage" prefWidth="200.0" styleClass="MainButtons" VBox.vgrow="NEVER">
+               <children>
+                  <FontAwesomeIconView glyphName="BARS" size="25" styleClass="Icons">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label text="Kolejka Odtwarzania">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#toAlbumPage" prefWidth="200.0" styleClass="MainButtons" VBox.vgrow="NEVER">
+               <children>
+                  <FontAwesomeIconView glyphName="FOLDER" size="25" styleClass="Icons">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label text="Albumy">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin></Separator>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#toSettingsPage" prefWidth="200.0" styleClass="MainButtons" VBox.vgrow="NEVER">
+               <children>
+                  <FontAwesomeIconView glyphName="COG" size="25" styleClass="Icons" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <Label text="Ustawienia">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox fx:id="windowPane" alignment="CENTER_LEFT" fillHeight="false" layoutY="118.0" onMouseDragged="#moveWindow" onMousePressed="#getMousePos" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <FontAwesomeIconView glyphName="PLAY_CIRCLE" size="20" styleClass="Icons">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
+               </HBox.margin>
+            </FontAwesomeIconView>
+            <Label text="Odtwarzacz MP3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Button fx:id="closin" layoutX="562.0" layoutY="14.0" maxHeight="30.0" maxWidth="30.0" mnemonicParsing="false" onAction="#onCloseWindow" prefHeight="30.0" prefWidth="30.0" styleClass="windowButtons" text="x" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="maxim" layoutX="520.0" maxHeight="30.0" maxWidth="30.0" mnemonicParsing="false" onAction="#onMaximizeWindow" prefHeight="30.0" prefWidth="30.0" styleClass="windowButtons" text="□" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="minim" layoutX="572.0" layoutY="24.0" maxHeight="30.0" maxWidth="30.0" mnemonicParsing="false" onAction="#onMinimizeWindow" prefHeight="30.0" prefWidth="30.0" styleClass="windowButtons" text="▁" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <AnchorPane fx:id="mainPanel" layoutX="510.0" layoutY="152.0" styleClass="mainPane" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label fx:id="activeTitle" layoutX="76.0" layoutY="29.0" text="Strona Główna" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="12.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Button fx:id="chooserButton" layoutX="473.0" layoutY="22.0" mnemonicParsing="false" onAction="#onChooserClick" text="Dodaj _" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <graphic>
+                  <FontAwesomeIconView glyphName="FOLDER_OPEN" size="20" styleClass="Icons" />
+               </graphic>
+            </Button>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
