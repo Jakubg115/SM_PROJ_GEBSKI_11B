@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="windowPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.LibraryController">
+<AnchorPane fx:id="windowPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.MainScreen">
    <children>
       <VBox fx:id="sidePanel" layoutX="83.0" layoutY="118.0" prefWidth="250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -116,7 +116,7 @@
                   <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
                </HBox.margin>
             </FontAwesomeIconView>
-            <Label text="Odtwarzacz MP3">
+            <Label fx:id="mainTitle" text="Odtwarzacz MP3">
                <font>
                   <Font size="14.0" />
                </font>
@@ -138,18 +138,6 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <AnchorPane fx:id="mainPanel" layoutX="510.0" layoutY="152.0" styleClass="mainPane" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-         <children>
-            <Label fx:id="activeTitle" layoutX="76.0" layoutY="29.0" text="Strona Główna" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="12.0">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <Button fx:id="chooserButton" layoutX="473.0" layoutY="22.0" mnemonicParsing="false" onAction="#onChooserClick" text="Dodaj _" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-               <graphic>
-                  <FontAwesomeIconView glyphName="FOLDER_OPEN" size="20" styleClass="Icons" />
-               </graphic>
-            </Button>
-         </children></AnchorPane>
+      <AnchorPane fx:id="mainPanel" layoutX="510.0" layoutY="152.0" styleClass="mainPane" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
    </children>
 </AnchorPane>

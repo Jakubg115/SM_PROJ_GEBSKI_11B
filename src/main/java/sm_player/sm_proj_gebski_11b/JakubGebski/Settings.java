@@ -6,17 +6,33 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Settings {
 
     private static LinkedList<String> queue=new LinkedList<>();
     private static final String configDirPath="src/main/resources/config.txt";
 
+    private static String programName;
     private static String currentTheme;
     private static String mainDirPath="";
     private static double width,height;
+
+    public static List<String> Directories=new LinkedList<>();
+
+    // gettery
+
+
+
+    public static String getMainDirPath(){return mainDirPath;}
+
+    public static double[] getResolution(){return new double[]{width, height};}
+
+    public static String getProgramName(){return programName;}
+    // settery
 
     public static void initTheme(@NotNull Stage stage){
         stage.getScene().getStylesheets().add(Settings.class.getResource("/styles/"+currentTheme+".css").toExternalForm());
@@ -37,13 +53,14 @@ public class Settings {
             e.printStackTrace();
         }
     }
-    public static String getMainDirPath(){return mainDirPath;}
 
     public static void setResolution(double x, double y){
         width=x;
         height=y;
     }
-    public static double[] getResolution(){return new double[]{width, height};}
+
+
+    // Zapis i odczyt do pliku
 
     private static void writeMainDirPath(FileWriter file){
         String defaultMusicPath = "src/main/resources/music";
@@ -88,25 +105,32 @@ public class Settings {
         }
     }
 
-    private static void readMainDirPath(String str){
-        mainDirPath=str.split(" ")[1];
-    }
-    private static void readResolution(String str1, String str2){
-        width= Double.parseDouble(str1.split(" ")[1]);
-        height=Double.parseDouble(str2.split(" ")[1]);
-    }
+    private static void lookForFolders(Iterator<String> it){
+        String s;
+        while (it.hasNext())
+        {
+            s=it.next();
+            if(!s.equals("}")){
+                if(s.contains("Directories:{")){continue;}
+                Directories.add(s);
+            }
+            else {break;}
+        }
 
-    private static void readTheme(String str){
-        currentTheme=str.split(" ")[1];
     }
 
     public static void readSettings(){
         try {
             FileReader reader=new FileReader(configDirPath);
             List<String> readed=  reader.readAllLines();
-            readMainDirPath(readed.get(0));
-            readResolution(readed.get(1),readed.get(2));
-            readTheme(readed.get(3));
+            Iterator<String> it=readed.iterator();
+
+            programName=it.next().split(" ")[1];
+            width=Double.parseDouble(it.next().split(" ")[1]);
+            height=Double.parseDouble(it.next().split(" ")[1]);
+            currentTheme=it.next().split(" ")[1];
+            lookForFolders(it);
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

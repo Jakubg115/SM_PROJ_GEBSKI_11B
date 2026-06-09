@@ -2,30 +2,34 @@ package sm_player.sm_proj_gebski_11b.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 import sm_player.sm_proj_gebski_11b.JakubGebski.StaticObjects;
 
-public class LibraryController implements StaticObjects {
+public class MainScreen implements StaticObjects {
 
     private double x, y;
 
     @FXML
-    private Label activeTitle;
+    private Label mainTitle;
     @FXML
     private VBox sidePanel;
     @FXML
     private AnchorPane windowPanel, mainPanel;
-    @FXML
-    private Button chooserButton;
 
     private Stage stage;
     private boolean maximized = false;
+
+
+    @FXML
+    public void initialize(){
+        mainTitle.setText(Settings.getProgramName());
+    }
 
     public void setStage(Stage st) {
         this.stage = st;
@@ -47,45 +51,49 @@ public class LibraryController implements StaticObjects {
         this.stage.setIconified(true);
     }
 
-
-    @FXML
-    private void toMainPage() {
-        this.activeTitle.setText("Strona główna");
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("/sm_player/sm_proj_gebski_11b/MainScene.fxml"));
+    private void setConcretePage(String component_name){
+        mainPanel.getChildren().clear();
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("/sm_player/sm_proj_gebski_11b/"+component_name+".fxml"));
         try {
-            AnchorPane asd=loader.load();
-            mainPanel.getChildren().add(asd);
-
-            AnchorPane.setBottomAnchor(asd,0.0);
-            AnchorPane.setLeftAnchor(asd,0.0);
-            AnchorPane.setRightAnchor(asd,0.0);
-
-            System.out.println(mainPanel.getWidth());
-            System.out.println(mainPanel.getHeight());
-
+            AnchorPane page=loader.load();
+             mainPanel.getChildren().add(page);
+            AnchorPane.setRightAnchor(page,0.0);
+            AnchorPane.setLeftAnchor(page,0.0);
+            AnchorPane.setBottomAnchor(page,0.0);
+            AnchorPane.setTopAnchor(page,0.0);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
+
+    @FXML
+    private void toMainPage() {
+        mainPanel.getChildren().clear();
+        setConcretePage("HomePage");
+
+    }
+
+
+
     @FXML
     private void toLibraryPage() {
-        this.activeTitle.setText("Przegląd bibliotek");
+        setConcretePage("LibraryPage");
     }
 
     @FXML
     private void toQueuePage() {
-        this.activeTitle.setText("Kolejka odtwarzania");
+        mainPanel.getChildren().clear();
     }
 
     @FXML
     private void toSettingsPage() {
-        this.activeTitle.setText("Ustawienia");
+        mainPanel.getChildren().clear();
     }
 
     @FXML
     private void toAlbumPage() {
-        this.activeTitle.setText("Albumy");
+        mainPanel.getChildren().clear();
     }
 
     @FXML

@@ -4,7 +4,9 @@
 }
 .button{
     -fx-background-insets:0;
-    -fx-background-radius:0;
+    -fx-background-radius:5;
+    -fx-border-color:lightgray;
+    -fx-border-radius:5;
 }
 .MainButtons:hover{
     -fx-background-color: #d1d0d0;
@@ -14,6 +16,9 @@
 }
 .windowButtons{
     -fx-background-color:inherit;
+    -fx-border-radius:0;
+    -fx-background-radius:0;
+    -fx-border-color:none;
 }
 #minim:hover,#maxim:hover{
     -fx-background-color:#d1d0d0;
@@ -30,7 +35,36 @@
 .mainPane{
     -fx-background-color: #e3e3e3;
     -fx-border-color:lightgray;
+    -fx-border-radius:0;
 }
 .Icons{
-    -fx-fill:red;
+    -fx-fill:black;
+}
+.folderView,.list-view{
+    -fx-border-color:lightgray;
+    -fx-border-radius:5;
+    -fx-background-insets:0;
+    -fx-background-radius:5;
+}
+.ComponentOptions{
+    -fx-background-insets:0;
+    -fx-background-color:inherit;
+    -fx-background-radius:0;
+    -fx-border-radius:5;
+    -fx-border-color:none;
+}
+.ComponentOptions:hover{
+    -fx-background-color:lightgray;
+}
+.list-cell{
+    -fx-background-color:inherit;
+}
+.list-cell:even{
+    -fx-background-color: #f3f3f3;
+}
+.list-cell:filled:pressed{
+    -fx-background-color: lightgray;
+}
+.list-cell:selected{
+    -fx-background-color: #bdbcbc;
 }
