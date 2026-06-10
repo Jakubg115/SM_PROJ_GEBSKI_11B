@@ -15,7 +15,10 @@ public class FileListCellController {
         this.fileName.setText(filename);
     }
 
+    public String getFileName(){return this.fileName.getText();}
+
     public void onClick(MouseEvent event) {
+
     }
 
     public void onMarked(ActionEvent actionEvent) {

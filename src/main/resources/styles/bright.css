@@ -57,14 +57,19 @@
     -fx-background-color:lightgray;
 }
 .list-cell{
-    -fx-background-color:inherit;
+    -fx-background-color:white;
+    -fx-text-fill: black;
 }
 .list-cell:even{
     -fx-background-color: #f3f3f3;
+    -fx-text-fill: black;
 }
 .list-cell:filled:pressed{
     -fx-background-color: lightgray;
 }
 .list-cell:selected{
     -fx-background-color: #bdbcbc;
+}
+.scroll-pane{
+    -fx-background-insets:0;
 }

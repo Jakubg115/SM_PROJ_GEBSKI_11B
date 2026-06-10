@@ -30,7 +30,7 @@
             </FontAwesomeIconView>
          </children>
       </HBox>
-      <ListView fx:id="fileListView" prefHeight="0.0" prefWidth="200.0" styleClass="fileList" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+      <ListView fx:id="fileListView" onMouseClicked="#onListClick" prefHeight="0.0" prefWidth="200.0" styleClass="fileList" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
       <Button fx:id="fileOptions" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="40.0" layoutX="509.0" layoutY="14.0" mnemonicParsing="false" onAction="#onOptionsClick" styleClass="ComponentOptions" text=":" textAlignment="CENTER" textOverrun="CLIP" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font name="System Bold" size="18.0" />

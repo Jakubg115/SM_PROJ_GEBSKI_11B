@@ -2,11 +2,9 @@ package sm_player.sm_proj_gebski_11b.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 import sm_player.sm_proj_gebski_11b.JakubGebski.StaticObjects;
@@ -18,9 +16,7 @@ public class MainScreen implements StaticObjects {
     @FXML
     private Label mainTitle;
     @FXML
-    private VBox sidePanel;
-    @FXML
-    private AnchorPane windowPanel, mainPanel;
+    private AnchorPane mainPanel;
 
     private Stage stage;
     private boolean maximized = false;
@@ -70,7 +66,7 @@ public class MainScreen implements StaticObjects {
     @FXML
     private void toMainPage() {
         mainPanel.getChildren().clear();
-        setConcretePage("HomePage");
+        setConcretePage("MainScene");
 
     }
 
@@ -84,6 +80,7 @@ public class MainScreen implements StaticObjects {
     @FXML
     private void toQueuePage() {
         mainPanel.getChildren().clear();
+        Settings.readQueue();
     }
 
     @FXML

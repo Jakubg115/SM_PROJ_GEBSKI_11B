@@ -1,7 +1,11 @@
 package sm_player.sm_proj_gebski_11b.JakubGebski;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+import sm_player.sm_proj_gebski_11b.Controllers.MediaController;
 
 import java.io.File;
 import java.io.FileReader;
@@ -9,37 +13,41 @@ import java.io.FileWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
-public class Settings {
+public class Settings implements StaticObjects {
 
-    private static LinkedList<String> queue=new LinkedList<>();
-    private static final String configDirPath="src/main/resources/config.txt";
+    private static final List<String> Directories=new LinkedList<>();
+
+
+    private static final String configDirPath= "config.txt";
 
     private static String programName;
     private static String currentTheme;
     private static String mainDirPath="";
     private static double width,height;
 
-    public static List<String> Directories=new LinkedList<>();
-
-    // gettery
+    private static Stage mediaPlayerStage;
 
 
 
-    public static String getMainDirPath(){return mainDirPath;}
+    //-------------------------------------gettery----------------------------------------//
 
     public static double[] getResolution(){return new double[]{width, height};}
 
     public static String getProgramName(){return programName;}
-    // settery
+
+    public static Iterator<String> getDirectories(){return Directories.iterator();}
+
+    public static List<String> getActiveQueue(){return queue;}
+
+
+    //-------------------------------------settery----------------------------------------//
 
     public static void initTheme(@NotNull Stage stage){
         stage.getScene().getStylesheets().add(Settings.class.getResource("/styles/"+currentTheme+".css").toExternalForm());
     }
 
-    public static void setTheme(@NotNull Stage stage, ThemeModes mode){
-        stage.getScene().getStylesheets().add(Settings.class.getResource("/styles/"+mode+".css").toExternalForm());
+    public static void setTheme(ThemeModes mode){
         currentTheme= mode.toString();
     }
 
@@ -59,8 +67,43 @@ public class Settings {
         height=y;
     }
 
+    //------------------------------operacje do programu------------------------------------//
 
-    // Zapis i odczyt do pliku
+    public static int addFileToQueue(String filePath){
+        if(!queue.contains(filePath)){
+            queue.add(filePath);
+        }
+        return queue.indexOf(filePath);
+    }
+
+    public static void readQueue(){
+        for (String s : queue) {
+            System.out.println(s);
+        }
+    }
+
+    public static void openMediaPlayerScene(int index){
+        try {
+            FXMLLoader loader = new FXMLLoader(Settings.class.getResource("/sm_player/sm_proj_gebski_11b/MusicPlayerScene.fxml"));
+            if(!mediaPlayerStage.isShowing()){
+                Parent root = loader.load();
+                mediaPlayerStage.setScene(new Scene(root));
+                mediaPlayerStage.setTitle("Odtwarzacz Muzyki");
+
+            }
+            mediaPlayerStage.show();
+            initTheme(mediaPlayerStage);
+            MediaController controller = loader.getController();
+            controller.copyStage(mediaPlayerStage);
+            controller.Start(index);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //------------------------------Zapis i odczyt pliku------------------------------------//
 
     private static void writeMainDirPath(FileWriter file){
         String defaultMusicPath = "src/main/resources/music";
@@ -125,12 +168,11 @@ public class Settings {
             List<String> readed=  reader.readAllLines();
             Iterator<String> it=readed.iterator();
 
-            programName=it.next().split(" ")[1];
-            width=Double.parseDouble(it.next().split(" ")[1]);
-            height=Double.parseDouble(it.next().split(" ")[1]);
-            currentTheme=it.next().split(" ")[1];
+            programName=it.next().split(": ")[1];
+            width=Double.parseDouble(it.next().split(": ")[1]);
+            height=Double.parseDouble(it.next().split(": ")[1]);
+            currentTheme=it.next().split(": ")[1];
             lookForFolders(it);
-
 
         } catch (Exception e) {
             throw new RuntimeException(e);
