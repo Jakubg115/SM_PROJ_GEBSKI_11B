@@ -6,10 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sm_player.sm_proj_gebski_11b.Components.QueuePage;
+import sm_player.sm_proj_gebski_11b.Components.SettingsPage;
 import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
-import sm_player.sm_proj_gebski_11b.JakubGebski.StaticObjects;
 
-public class MainScreen implements StaticObjects {
+public class MainScreen {
 
     private double x, y;
 
@@ -25,6 +26,12 @@ public class MainScreen implements StaticObjects {
     @FXML
     public void initialize(){
         mainTitle.setText(Settings.getProgramName());
+        Settings.MainPages.add(createConcretePage("HomePage")); //kreuje Strone glowna
+        Settings.MainPages.add(createConcretePage("LibraryPage")); //kreuje Strone z Bibliotekami
+        Settings.MainPages.add(createConcretePage("QueuePage")); //kreuje Strone z Bibliotekami
+        Settings.MainPages.add(createConcretePage("AlbumPage")); //kreuje Strone z Bibliotekami
+        Settings.MainPages.add(createConcretePage("SettingsPage")); //kreuje Strone z Bibliotekami
+        toMainPage();
     }
 
     public void setStage(Stage st) {
@@ -47,54 +54,52 @@ public class MainScreen implements StaticObjects {
         this.stage.setIconified(true);
     }
 
-    private void setConcretePage(String component_name){
-        mainPanel.getChildren().clear();
+    private AnchorPane createConcretePage(String component_name){
         FXMLLoader loader=new FXMLLoader(getClass().getResource("/sm_player/sm_proj_gebski_11b/"+component_name+".fxml"));
         try {
             AnchorPane page=loader.load();
-             mainPanel.getChildren().add(page);
             AnchorPane.setRightAnchor(page,0.0);
             AnchorPane.setLeftAnchor(page,0.0);
             AnchorPane.setBottomAnchor(page,0.0);
             AnchorPane.setTopAnchor(page,0.0);
+
+            return page;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
 
     @FXML
     private void toMainPage() {
         mainPanel.getChildren().clear();
-        setConcretePage("MainScene");
+        mainPanel.getChildren().add(Settings.getPage(0));
 
     }
 
-
-
     @FXML
     private void toLibraryPage() {
-        setConcretePage("LibraryPage");
+        mainPanel.getChildren().clear();
+        mainPanel.getChildren().add(Settings.getPage(1));
     }
 
     @FXML
     private void toQueuePage() {
         mainPanel.getChildren().clear();
-        Settings.readQueue();
-    }
-
-    @FXML
-    private void toSettingsPage() {
-        mainPanel.getChildren().clear();
+        mainPanel.getChildren().add(Settings.getPage(2));
     }
 
     @FXML
     private void toAlbumPage() {
         mainPanel.getChildren().clear();
+        mainPanel.getChildren().add(Settings.getPage(3));
     }
 
     @FXML
-    private void onChooserClick() {
+    private void toSettingsPage() {
+        mainPanel.getChildren().clear();
+        mainPanel.getChildren().add(Settings.getPage(4));
     }
 
     public void getMousePos(MouseEvent event) {

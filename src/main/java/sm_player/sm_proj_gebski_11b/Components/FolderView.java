@@ -40,6 +40,7 @@ public class FolderView extends AnchorPane {
     public void manageSelected(FileListCell file){
         String path=this.folder.getAbsolutePath()+"\\"+file.getFileName();
         int index=Settings.addFileToQueue(path);
+
         Settings.openMediaPlayerScene(index<=-1?0:index);
     }
 }

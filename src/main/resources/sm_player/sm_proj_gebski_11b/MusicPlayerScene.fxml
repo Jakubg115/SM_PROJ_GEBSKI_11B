@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MainPane" maxHeight="600.0" maxWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.MediaController">
+<AnchorPane fx:id="MainPane" maxHeight="600.0" maxWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.MediaController">
    <children>
-      <AnchorPane layoutX="300.0" layoutY="400.0" prefHeight="150.0" prefWidth="800.0" style="-fx-background-color: #cccccc; -fx-border-color: #b3b3b3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="300.0" layoutY="400.0" prefHeight="150.0" prefWidth="800.0" styleClass="playerPanel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Slider fx:id="PlaybackSlider" blockIncrement="1.0" depthTest="DISABLE" layoutX="18.0" layoutY="7.0" onDragDetected="#OnPlaybackPressed" onMousePressed="#OnPlaybackPressed" onMouseReleased="#OnPlaybackReleased" prefHeight="80.0" prefWidth="766.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
                <padding>
@@ -33,14 +33,14 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <HBox fx:id="ButtonMenu" alignment="CENTER" layoutX="2.0" layoutY="72.0" prefHeight="88.0" prefWidth="796.0" spacing="30.0" style="-fx-alignment: center;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <HBox fx:id="ButtonMenu" alignment="CENTER" layoutX="2.0" layoutY="72.0" prefHeight="88.0" prefWidth="796.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <ComboBox fx:id="SpeedBox" onAction="#SpeedBoxAction" prefHeight="25.0" prefWidth="177.0" promptText="Prędkość Odtwarzania 1x">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </ComboBox>
-                  <Button fx:id="PrevButton" mnemonicParsing="false" text="⏪">
+                  <Button fx:id="PrevButton" mnemonicParsing="false" styleClass="queueButtons" text="⏪">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -55,8 +55,11 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
-                  <Button fx:id="NextButton" mnemonicParsing="false" text="⏩">
+                  <Button fx:id="NextButton" mnemonicParsing="false" styleClass="queueButtons" text="⏩">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

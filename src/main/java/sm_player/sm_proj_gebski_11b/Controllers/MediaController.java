@@ -32,7 +32,7 @@ import org.jaudiotagger.tag.datatype.Artwork;
 
 
 
-public class MediaController implements StaticObjects {
+public class MediaController {
 
     // obiekty dla fxml
     @FXML
@@ -60,14 +60,12 @@ public class MediaController implements StaticObjects {
     @FXML
     protected Label finTime = new Label();
 
-    // obiekty niestandardowe
-    private Media currmusic;
     private MediaPlayer player;
     private Stage stage;
     PrerunClass prerun=new PrerunClass();
     private boolean pausestate = false;
     private boolean muted = false;
-    private int currindex;
+    private static int currindex;
     private double volval;
 
     private final InvalidationListener playbacklistener = new InvalidationListener() {
@@ -116,30 +114,35 @@ public class MediaController implements StaticObjects {
 
     }
 
+    @FXML
+    public void initialize(){
+        SpeedBox.setItems(Settings.speeds);
+        VolSlider.setValue(0.5);
+    }
+
+    private final Runnable onRun=new Runnable() {
+        @Override
+        public void run() {
+            PlaybackSlider.setMax(player.getTotalDuration().toMillis());
+            PrevButton.setDisable(currindex == 0);
+            NextButton.setDisable(currindex == Settings.queue.size() - 1);
+            player.setVolume(VolSlider.getValue());
+        }
+    };
+
     public void Start(int index) throws FileNotFoundException {
         try {
-            if(queue.isEmpty()){throw new FileNotFoundException();}
-            this.currindex = index;
 
-            currmusic = new Media(new File(queue.get(index)).toURI().toString());
+            if(Settings.queue.isEmpty()){throw new FileNotFoundException();}
+            currindex = index;
+
+            // obiekty niestandardowe
+            Media currmusic = new Media(new File(Settings.queue.get(currindex)).toURI().toString());
             player = new MediaPlayer(currmusic);
             initListeners();
-            SetMeta(queue.get(index));
-
+            SetMeta(Settings.queue.get(currindex));
+            player.setOnReady(onRun);
             player.play();
-
-            player.setOnReady(new Runnable() {
-                @Override
-                public void run() {
-                    SpeedBox.setItems(prerun.getSpeeds());
-                    PlaybackSlider.setMax(player.getTotalDuration().toMillis());
-                    if (currindex == 0) {
-                        PrevButton.setDisable(true);
-                    } else if (currindex == queue.size() - 1) {
-                        NextButton.setDisable(true);
-                    }
-                }
-            });
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -262,10 +265,9 @@ public class MediaController implements StaticObjects {
     }
 
 
-    private void changeIndex(int wy) throws FileNotFoundException {
+    public void changeIndex(int wy) throws FileNotFoundException {
         pausestate = true;
         PauseState();
-
         player.stop();
         MusicImage.setImage(null);
         PrevButton.setDisable(false);
@@ -273,5 +275,11 @@ public class MediaController implements StaticObjects {
 
         currindex = currindex + wy;
         Start(currindex);
+    }
+    public void setIndex(int index) throws FileNotFoundException {
+        player.stop();
+        MusicImage.setImage(null);
+        Start(index);
+
     }
 }

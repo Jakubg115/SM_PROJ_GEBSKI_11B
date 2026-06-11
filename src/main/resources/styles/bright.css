@@ -5,6 +5,7 @@
 .button{
     -fx-background-insets:0;
     -fx-background-radius:5;
+
     -fx-border-color:lightgray;
     -fx-border-radius:5;
 }
@@ -72,4 +73,38 @@
 }
 .scroll-pane{
     -fx-background-insets:0;
+}
+#listEnter:hover{
+    -fx-fill:lightgray;
+}
+#listEnter:pressed{
+    -fx-fill:white;
+}
+
+
+.playerPanel{
+    -fx-background-color: #e8e8e8;
+}
+.queueButtons{
+    -fx-background-insets:0;
+    -fx-background-radius:5;
+    -fx-border-radius:5;
+    -fx-background-color:inherit;
+    -fx-border-color:none;
+    -fx-text-fill:black;
+}
+
+.queueButtons:hover,#PauseButton:hover{
+    -fx-background-color: #cdcdcd;
+}
+.queueButtons:pressed,#PauseButton:pressed{
+    -fx-background-color: #afafaf;
+}
+#PauseButton{
+    -fx-background-insets:0;
+    -fx-background-radius:20;
+    -fx-border-radius:20;
+    -fx-border-color: gray;
+    -fx-background-color: #e1e1e1;
+    -fx-text-fill:black;
 }

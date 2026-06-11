@@ -1,25 +1,24 @@
 package sm_player.sm_proj_gebski_11b.JakubGebski;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+import sm_player.sm_proj_gebski_11b.Components.QueuePage;
 import sm_player.sm_proj_gebski_11b.Controllers.MediaController;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Settings implements StaticObjects {
 
-    private static final List<String> Directories=new LinkedList<>();
 
-
-    private static final String configDirPath= "config.txt";
 
     private static String programName;
     private static String currentTheme;
@@ -27,10 +26,12 @@ public class Settings implements StaticObjects {
     private static double width,height;
 
     private static Stage mediaPlayerStage;
+    private static MediaController controller;
 
 
 
     //-------------------------------------gettery----------------------------------------//
+
 
     public static double[] getResolution(){return new double[]{width, height};}
 
@@ -38,10 +39,25 @@ public class Settings implements StaticObjects {
 
     public static Iterator<String> getDirectories(){return Directories.iterator();}
 
+    public static String getMainDirPath(){return Directories.get(0);}
+
+    public static AnchorPane getPage(int index){
+        return MainPages.get(index);
+    }
+    public static String getCurrentTheme(){return currentTheme;}
+
+    public static ObservableList<String> getThemeLists(){return themes;}
+
+    public static List<String> getSelectedFolders(){
+        List<String> dir=Directories;
+        dir.remove(0);
+        return dir;
+    }
+
     public static List<String> getActiveQueue(){return queue;}
 
-
     //-------------------------------------settery----------------------------------------//
+
 
     public static void initTheme(@NotNull Stage stage){
         stage.getScene().getStylesheets().add(Settings.class.getResource("/styles/"+currentTheme+".css").toExternalForm());
@@ -76,6 +92,8 @@ public class Settings implements StaticObjects {
         return queue.indexOf(filePath);
     }
 
+
+
     public static void readQueue(){
         for (String s : queue) {
             System.out.println(s);
@@ -85,17 +103,26 @@ public class Settings implements StaticObjects {
     public static void openMediaPlayerScene(int index){
         try {
             FXMLLoader loader = new FXMLLoader(Settings.class.getResource("/sm_player/sm_proj_gebski_11b/MusicPlayerScene.fxml"));
-            if(!mediaPlayerStage.isShowing()){
+            if(mediaPlayerStage ==null){
+
                 Parent root = loader.load();
+                mediaPlayerStage=new Stage();
                 mediaPlayerStage.setScene(new Scene(root));
                 mediaPlayerStage.setTitle("Odtwarzacz Muzyki");
 
+                initTheme(mediaPlayerStage);
             }
             mediaPlayerStage.show();
-            initTheme(mediaPlayerStage);
-            MediaController controller = loader.getController();
-            controller.copyStage(mediaPlayerStage);
-            controller.Start(index);
+            if(controller ==null)
+            {
+                controller = loader.getController();
+                controller.copyStage(mediaPlayerStage);
+                controller.Start(index);
+            }
+            else {
+                controller.setIndex(index);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

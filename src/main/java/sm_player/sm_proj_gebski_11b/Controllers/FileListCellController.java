@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 
 public class FileListCellController {
     public Label fileName;
-    public Button fileOptions;
     public CheckBox selectedFile;
 
     public void set(String filename){
@@ -22,8 +21,5 @@ public class FileListCellController {
     }
 
     public void onMarked(ActionEvent actionEvent) {
-    }
-
-    public void onOptionsClick(ActionEvent actionEvent) {
     }
 }

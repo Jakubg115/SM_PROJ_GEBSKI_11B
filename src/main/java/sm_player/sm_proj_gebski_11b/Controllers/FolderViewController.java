@@ -1,18 +1,14 @@
 package sm_player.sm_proj_gebski_11b.Controllers;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
 import sm_player.sm_proj_gebski_11b.Components.FileListCell;
 import sm_player.sm_proj_gebski_11b.Components.FolderView;
-import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 
 public class FolderViewController {
 
