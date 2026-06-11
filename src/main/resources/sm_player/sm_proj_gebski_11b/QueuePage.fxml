@@ -6,20 +6,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="550.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Components.QueuePage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="550.0" styleClass="ConcretePage" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Components.QueuePage">
    <children>
       <Label layoutX="31.0" layoutY="29.0" text="Kolejka odtwarzania" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="12.0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Button layoutX="23.0" layoutY="65.0" mnemonicParsing="false" onAction="#initQueue" text="Załącz" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="65.0">
+      <Button fx:id="initButton" disable="true" layoutX="23.0" layoutY="65.0" mnemonicParsing="false" onAction="#initQueue" text="Załącz" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="65.0">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="85.0" layoutY="65.0" mnemonicParsing="false" onAction="#shuffle" text="🔀" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="65.0" />
+      <Button fx:id="shuffleButton" disable="true" layoutX="85.0" layoutY="65.0" mnemonicParsing="false" onAction="#shuffle" text="🔀" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="65.0" />
       <ListView fx:id="queueView" layoutX="161.0" layoutY="-24.0" onMouseClicked="#initMusic" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
-      <Button layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#resetShuffle" text="⮆" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="65.0" />
+      <Button fx:id="unShuffleButton" disable="true" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#resetShuffle" text="⮆" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="65.0" />
+      <Button fx:id="clearButton" disable="true" layoutX="440.0" layoutY="65.0" mnemonicParsing="false" onAction="#clearQueue" text="Wyczyść" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="65.0">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

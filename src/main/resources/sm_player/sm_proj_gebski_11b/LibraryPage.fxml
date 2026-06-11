@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="550.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Components.LibraryPage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="550.0" styleClass="ConcretePage" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Components.LibraryPage">
    <children>
       <Label layoutX="31.0" layoutY="29.0" text="Przegląd Bibliotek" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="12.0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Button layoutX="454.0" layoutY="21.0" mnemonicParsing="false" text="Dodaj folder" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
+      <Button layoutX="454.0" layoutY="21.0" mnemonicParsing="false" onAction="#openFolderChooser" text="Dodaj folder" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
          <graphic>
             <FontAwesomeIconView glyphName="FOLDER_OPEN" size="20" styleClass="Icons" />
          </graphic>
@@ -32,7 +32,7 @@
             </VBox>
          </content>
       </ScrollPane>
-      <HBox fx:id="sidebar" alignment="CENTER_LEFT" layoutX="14.0" layoutY="64.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0">
+      <HBox fx:id="sidebar" alignment="CENTER_LEFT" disable="true" layoutX="14.0" layoutY="64.0" visible="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0">
          <children>
             <Label text="x wybranych">
                <HBox.margin>
@@ -52,5 +52,6 @@
             <ComboBox editable="true" prefWidth="150.0" promptText="dodaj do albumu" />
          </children>
       </HBox>
+      <FontAwesomeIconView fx:id="folderSearcher" glyphName="REFRESH" layoutX="393.0" layoutY="38.0" onMouseClicked="#initFolders" size="20" styleClass="Icons" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="23.0" />
    </children>
 </AnchorPane>

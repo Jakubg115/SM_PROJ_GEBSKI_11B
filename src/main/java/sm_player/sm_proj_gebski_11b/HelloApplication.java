@@ -22,8 +22,8 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-        MainScreen s=fxmlLoader.getController();
-        s.setStage(stage);
+        Settings.setController(fxmlLoader.getController());
+        Settings.getController().setStage(stage);
         Settings.initTheme(stage);
 
     }

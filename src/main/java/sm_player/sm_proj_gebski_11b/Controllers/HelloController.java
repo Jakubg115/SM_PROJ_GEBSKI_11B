@@ -132,7 +132,7 @@ public class HelloController extends AnchorPane implements StaticObjects {
     }
 
     public void mixMusicFiles(){
-        insertItems(prerun.Shuffle(queue));
+        insertItems(prerun.Shuffle(Settings.queue));
         unmixButton.setDisable(false);
     }
 

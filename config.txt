@@ -1,9 +1,0 @@
-Name: Odtwarzacz_Muzyki
-Width: 800.0
-Height: 600.0
-Theme: bright
-Directories:{
-Główny: src/main/resources/music
-GeometryDash: C:\Users\Jakubg115\AppData\Local\GeometryDash
-}
-Remember: false

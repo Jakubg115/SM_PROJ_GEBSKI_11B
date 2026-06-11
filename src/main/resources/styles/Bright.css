@@ -2,18 +2,33 @@
     -fx-background-color: #e6e6e6;
     -fx-border-color:lightgray;
 }
+.mainPane{
+    -fx-background-color: #e3e3e3;
+    -fx-border-color:lightgray;
+    -fx-border-radius:0;
+}
+.Icons{
+    -fx-fill:black;
+}
+.label{
+    -fx-text-background-color:black;
+}
 .button{
     -fx-background-insets:0;
     -fx-background-radius:5;
-
-    -fx-border-color:lightgray;
+    -fx-background-color: #cdcdcd;
+    -fx-border-color:gray;
     -fx-border-radius:5;
 }
+
 .MainButtons:hover{
-    -fx-background-color: #d1d0d0;
+    -fx-background-color: #c3c3c3;
 }
-.MainButtons:pressed{
-    -fx-background-color: #b1b1b1;
+.button:hover{
+    -fx-background-color: #dfdfdf;
+}
+.MainButtons:pressed,.button:pressed{
+    -fx-background-color: #9a9a9a;
 }
 .windowButtons{
     -fx-background-color:inherit;
@@ -32,14 +47,6 @@
 }
 #closin:pressed{
     -fx-background-color: #bc0000;
-}
-.mainPane{
-    -fx-background-color: #e3e3e3;
-    -fx-border-color:lightgray;
-    -fx-border-radius:0;
-}
-.Icons{
-    -fx-fill:black;
 }
 .folderView,.list-view{
     -fx-border-color:lightgray;
@@ -74,13 +81,15 @@
 .scroll-pane{
     -fx-background-insets:0;
 }
+.scroll-pane .viewport{
+    -fx-background-color:inherit;
+}
 #listEnter:hover{
     -fx-fill:lightgray;
 }
 #listEnter:pressed{
     -fx-fill:white;
 }
-
 
 .playerPanel{
     -fx-background-color: #e8e8e8;
@@ -102,9 +111,23 @@
 }
 #PauseButton{
     -fx-background-insets:0;
-    -fx-background-radius:20;
-    -fx-border-radius:20;
+    -fx-background-radius:10;
+    -fx-border-radius:10;
     -fx-border-color: gray;
     -fx-background-color: #e1e1e1;
     -fx-text-fill:black;
+}
+#CoverPanel{
+    -fx-background-color: inherit;
+}
+.choice-box,.combo-box{
+    -fx-mark-color: black;
+    -fx-background-insets:0;
+    -fx-background-color: white;
+}
+.combo-box .list-cell{
+    -fx-background-color: #ccc9c9;
+}
+.combo-box .list-cell:even{
+    -fx-background-color: #b1b1b1;
 }

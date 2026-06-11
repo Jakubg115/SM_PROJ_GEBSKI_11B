@@ -6,32 +6,43 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
-import sm_player.sm_proj_gebski_11b.Components.QueuePage;
+import sm_player.sm_proj_gebski_11b.Components.*;
+import sm_player.sm_proj_gebski_11b.Controllers.MainScreen;
 import sm_player.sm_proj_gebski_11b.Controllers.MediaController;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Iterator;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 public class Settings implements StaticObjects {
 
+    public static LinkedList<String> queue=new LinkedList<>();
 
+    public static HomePage homepage;
+    public static LibraryPage librarypage;
+    public static QueuePage queuepage;
+    public static AlbumPage albumpage;
+    public static SettingsPage settingspage;
+
+    public static int activeIndex=0;
 
     private static String programName;
     private static String currentTheme;
-    private static String mainDirPath="";
     private static double width,height;
 
-    private static Stage mediaPlayerStage;
-    private static MediaController controller;
+    public static Stage mediaPlayerStage;
+    private static MediaController mediaController;
+    private static MainScreen mainscreenController;
+
+
 
 
 
     //-------------------------------------gettery----------------------------------------//
-
 
     public static double[] getResolution(){return new double[]{width, height};}
 
@@ -49,39 +60,47 @@ public class Settings implements StaticObjects {
     public static ObservableList<String> getThemeLists(){return themes;}
 
     public static List<String> getSelectedFolders(){
-        List<String> dir=Directories;
-        dir.remove(0);
-        return dir;
+        return Directories;
     }
 
     public static List<String> getActiveQueue(){return queue;}
 
+    public static void validateInMediaPlayer(){
+        mediaController.zeroIndex();
+        mediaController.manageQueueButtons();
+    }
+
+    public static String getActiveFile(){return mediaController.getActiveFile();}
+
+    public static MainScreen getController(){return mainscreenController;}
+
     //-------------------------------------settery----------------------------------------//
 
+    public static void setController(MainScreen con){mainscreenController=con;}
 
     public static void initTheme(@NotNull Stage stage){
-        stage.getScene().getStylesheets().add(Settings.class.getResource("/styles/"+currentTheme+".css").toExternalForm());
-    }
-
-    public static void setTheme(ThemeModes mode){
-        currentTheme= mode.toString();
-    }
-
-    public static void changeMainDir(File newMainDir){
         try {
-            if(newMainDir.exists()){
-                mainDirPath= newMainDir.getAbsolutePath();
-            }
-            else {throw new Exception();}
-        } catch (Exception e) {
-            e.printStackTrace();
+            stage.getScene().getStylesheets().clear();
+            stage.getScene().getStylesheets().add(Objects.requireNonNull(Settings.class.getResource("/styles/" + currentTheme + ".css")).toExternalForm());
+        }catch (NullPointerException e)
+        {
+            System.out.println("W pliku konfigoracyjnym doszlo do naruszenia wartosci do motywu!\n Wdrozenie domyslnej konfiguracji (Jasny)");
+            currentTheme="Bright";
+            stage.getScene().getStylesheets().add(Objects.requireNonNull(Settings.class.getResource("/styles/" + currentTheme + ".css")).toExternalForm());
         }
+
+    }
+
+    public static void setTheme(String mode){
+        currentTheme= mode;
     }
 
     public static void setResolution(double x, double y){
         width=x;
         height=y;
     }
+
+    public static void setProgramName(String name){programName=name;}
 
     //------------------------------operacje do programu------------------------------------//
 
@@ -93,11 +112,19 @@ public class Settings implements StaticObjects {
     }
 
 
+    public static void addFolder(String name, String path){
+        Directories.add(name+": "+path);
+        settingspage.refreshFolderList();
+    }
 
-    public static void readQueue(){
-        for (String s : queue) {
-            System.out.println(s);
-        }
+    public static void setChanges(){
+        Stage stage=mainscreenController.getStage();
+        double[] resolution=getResolution();
+        initTheme(stage);
+        stage.setWidth(resolution[0]);
+        stage.setHeight(resolution[1]);
+        initTheme(mediaPlayerStage);
+        mainscreenController.setProgramName(getProgramName());
     }
 
     public static void openMediaPlayerScene(int index){
@@ -113,14 +140,14 @@ public class Settings implements StaticObjects {
                 initTheme(mediaPlayerStage);
             }
             mediaPlayerStage.show();
-            if(controller ==null)
+            if(mediaController ==null)
             {
-                controller = loader.getController();
-                controller.copyStage(mediaPlayerStage);
-                controller.Start(index);
+                mediaController = loader.getController();
+                mediaController.copyStage(mediaPlayerStage);
+                mediaController.Start(index);
             }
             else {
-                controller.setIndex(index);
+                mediaController.setIndex(index);
             }
 
 
@@ -132,14 +159,17 @@ public class Settings implements StaticObjects {
 
     //------------------------------Zapis i odczyt pliku------------------------------------//
 
-    private static void writeMainDirPath(FileWriter file){
-        String defaultMusicPath = "src/main/resources/music";
-        String mainDir="MainDir: "+(mainDirPath.isEmpty()? defaultMusicPath :mainDirPath)+"\n";
+    private static void writeFolderPaths(FileWriter file){
         try {
-            file.append(mainDir);
+            file.write("Directories:{\n");
+            for (String directory : Directories) {
+                file.write(directory + "\n");
+            }
+            file.write("}\n");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
 
@@ -164,9 +194,10 @@ public class Settings implements StaticObjects {
     public static void saveChanges(){
         try{
             FileWriter result=new FileWriter(configDirPath);
-            writeMainDirPath(result);
+            result.write("Name: "+programName+"\n");
             writeResolution(result);
             writeCurrentTheme(result);
+            writeFolderPaths(result);
             result.close();
 
 
@@ -192,7 +223,7 @@ public class Settings implements StaticObjects {
     public static void readSettings(){
         try {
             FileReader reader=new FileReader(configDirPath);
-            List<String> readed=  reader.readAllLines();
+            List<String> readed= reader.readAllLines();
             Iterator<String> it=readed.iterator();
 
             programName=it.next().split(": ")[1];
@@ -201,9 +232,33 @@ public class Settings implements StaticObjects {
             currentTheme=it.next().split(": ")[1];
             lookForFolders(it);
 
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            System.out.println("Nie znaleziono w programie pliku konfiguracyjnego.\n Wdrozenie konfiguracji domyslnej!");
+            defaultSetting();
+            saveChanges();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        catch (NumberFormatException | NoSuchElementException e){
+            System.out.println("Blad w trakcie odczytywania ustawien do programu! Wdrozenie konfiguracji domyslnej!");
+            defaultSetting();
+            saveChanges();
+        }
+
     }
+
+    public static void defaultSetting(){
+        programName="Odtwarzacz MP3";
+        width=800; height=600;
+        currentTheme="Bright";
+        if(Settings.Directories.isEmpty()){
+            Settings.Directories.add(Settings.defaultDirPath);
+        }
+        else {
+            Settings.Directories.set(0,Settings.defaultDirPath);
+        }
+
+    }
+
 
 }

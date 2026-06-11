@@ -15,7 +15,7 @@ public class PrerunClass implements StaticObjects {
     public ObservableList<Double> getSpeeds(){return speeds;}
 
     public List<String> loadMusicFiles(String path)  {
-        queue.clear();
+        Settings.queue.clear();
         List<String> list=new LinkedList<>();
         File folder = new File(path);
         try
@@ -33,7 +33,7 @@ public class PrerunClass implements StaticObjects {
 
     public void fillQueue(List<String> list)
     {
-        queue.clear();
+        Settings.queue.clear();
         try
         {
             if(list==null) throw new Exception("Lista ktora podales jest null!\n");
@@ -41,7 +41,7 @@ public class PrerunClass implements StaticObjects {
             Iterator<String> it= list.iterator();
             while (it.hasNext())
             {
-                queue.add(currentpath+"/"+it.next());
+                Settings.queue.add(currentpath+"/"+it.next());
             }
         } catch (Exception e) {
             throw new RuntimeException();

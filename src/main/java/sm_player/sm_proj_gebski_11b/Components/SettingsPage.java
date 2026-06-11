@@ -5,43 +5,76 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.layout.AnchorPane;
 import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 
-public class SettingsPage extends AnchorPane {
+import java.util.List;
+
+public class SettingsPage {
     @FXML
     private TextField programName, programWidth, programHeight, mainDirPath;
     @FXML
-    private ChoiceBox<String> programTheme=new ChoiceBox<>();
+    private ChoiceBox<String> programTheme = new ChoiceBox<>();
     @FXML
     private ListView<String> folderView;
 
-    public void initReadedValues(){
+    public void initReadedValues() {
         programName.setText(Settings.getProgramName());
-        double[] resolution=Settings.getResolution();
-        programWidth.setText(resolution[0]+"");
-        programHeight.setText(resolution[1]+"");
+        double[] resolution = Settings.getResolution();
+        programWidth.setText(resolution[0] + "");
+        programHeight.setText(resolution[1] + "");
         mainDirPath.setText(Settings.getMainDirPath());
         programTheme.setItems(Settings.getThemeLists());
-        programTheme.setValue(Settings.getCurrentTheme());
+        programTheme.getSelectionModel().select(Settings.getCurrentTheme());
+        refreshFolderList();
 
-        folderView.getItems().setAll(Settings.getSelectedFolders());
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         initReadedValues();
         folderView.setEditable(true);
-        folderView.setCellFactory(TextFieldListCell.forListView());
     }
 
-    public void setSaved(ActionEvent actionEvent) {
-        Settings.readSettings();
+    public void refreshFolderList() {
+        folderView.getItems().clear();
+        List<String> list = Settings.getSelectedFolders();
+        for (int i = 1; i < list.size(); i++) {
+            folderView.getItems().add(list.get(i));
+        }
+    }
+
+    private void resetComponents() {
+        programName.clear();
+        programWidth.clear();
+        programHeight.clear();
+        mainDirPath.clear();
+    }
+
+
+    public void setSaved() {
+        resetComponents();
+        Settings.defaultSetting();
         initReadedValues();
     }
 
-    public void saveChanges(ActionEvent actionEvent) {
+    public void saveChanges() {
+        Settings.setProgramName(programName.getText());
+        try {
+
+            double width = Double.parseDouble(programWidth.getText());
+            double height= Double.parseDouble(programHeight.getText());
+            Settings.setResolution(width,height);
+            Settings.setTheme(programTheme.getValue());
+            Settings.Directories.clear();
+            Settings.Directories.add(mainDirPath.getText());
+            Settings.Directories.addAll(folderView.getItems());
+            Settings.saveChanges();
+            Settings.setChanges();
+        } catch (Exception e) {
+            programWidth.setText(""+Settings.getResolution()[0]);
+            programHeight.setText(""+Settings.getResolution()[1]);
+        }
+
 
     }
 
@@ -49,6 +82,6 @@ public class SettingsPage extends AnchorPane {
     }
 
     public void resetFolderPath(ActionEvent actionEvent) {
-
+        mainDirPath.setText(Settings.defaultDirPath);
     }
 }

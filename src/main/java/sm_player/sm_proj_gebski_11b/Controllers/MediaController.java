@@ -96,6 +96,8 @@ public class MediaController {
         }
     };
 
+
+
     public void initListeners()
     {
         player.currentTimeProperty().addListener(playbacklistener);
@@ -114,6 +116,12 @@ public class MediaController {
 
     }
 
+    public void manageQueueButtons(){
+        System.out.println(Settings.queue.size()+" | "+currindex);
+        PrevButton.setDisable(currindex == 0);
+        NextButton.setDisable(currindex == Settings.queue.size() - 1);
+    }
+
     @FXML
     public void initialize(){
         SpeedBox.setItems(Settings.speeds);
@@ -124,8 +132,7 @@ public class MediaController {
         @Override
         public void run() {
             PlaybackSlider.setMax(player.getTotalDuration().toMillis());
-            PrevButton.setDisable(currindex == 0);
-            NextButton.setDisable(currindex == Settings.queue.size() - 1);
+            manageQueueButtons();
             player.setVolume(VolSlider.getValue());
         }
     };
@@ -165,6 +172,8 @@ public class MediaController {
         });
 
     }
+
+    public String getActiveFile(){return Settings.queue.get(currindex);}
 
     public void SetMeta(String filePath) {
         Image no = new Image("No_Cover.jpg");
@@ -282,4 +291,5 @@ public class MediaController {
         Start(index);
 
     }
+    public void zeroIndex(){currindex=0;}
 }
