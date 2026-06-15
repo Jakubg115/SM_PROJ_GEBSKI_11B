@@ -1,6 +1,7 @@
 package sm_player.sm_proj_gebski_11b.Controllers;
 
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,8 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-
-
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
@@ -34,9 +33,11 @@ import org.jaudiotagger.tag.datatype.Artwork;
 
 public class MediaController {
 
+
+
     // obiekty dla fxml
     @FXML
-    protected AnchorPane MainPane=new AnchorPane();
+    private AnchorPane mainPanel, coverPanel;
     @FXML
     protected HBox ButtonMenu = new HBox();
     @FXML
@@ -62,7 +63,7 @@ public class MediaController {
 
     private MediaPlayer player;
     private Stage stage;
-    PrerunClass prerun=new PrerunClass();
+    //PrerunClass prerun=new PrerunClass();
     private boolean pausestate = false;
     private boolean muted = false;
     private static int currindex;
@@ -72,7 +73,7 @@ public class MediaController {
         @Override
         public void invalidated(Observable observable) {
             PlaybackSlider.setValue(player.getCurrentTime().toMillis());
-            Platform.runLater(() -> curTime.setText(prerun.initTime((int)player.getCurrentTime().toSeconds())));
+            Platform.runLater(() -> curTime.setText(Settings.initTime((int)player.getCurrentTime().toSeconds())));
         }
     };
     private final InvalidationListener volchangelistener=new InvalidationListener() {
@@ -81,50 +82,51 @@ public class MediaController {
             volval=player.getVolume();
         }
     };
-    private final InvalidationListener onwidthchangelistener= new InvalidationListener() {
-        @Override
-        public void invalidated(Observable observable) {
-        VolSlider.setMajorTickUnit(VolSlider.getWidth()<90?0.5:0.2);
-        ButtonMenu.setSpacing((int)(MainPane.getWidth()/25)-1);
-        MusicImage.setFitWidth(MainPane.getWidth()-25);
-        }
-    };
-    private final InvalidationListener onheightchangelistener= new InvalidationListener() {
-        @Override
-        public void invalidated(Observable observable) {
-            MusicImage.setFitHeight(MainPane.getHeight()-190);
-        }
-    };
-
 
 
     public void initListeners()
     {
+        MusicImage.setFitWidth(coverPanel.getWidth());
+        MusicImage.setFitHeight(coverPanel.getHeight());
         player.currentTimeProperty().addListener(playbacklistener);
         VolSlider.valueProperty().addListener(volchangelistener);
-        MainPane.widthProperty().addListener(onwidthchangelistener);
-        MainPane.heightProperty().addListener(onheightchangelistener);
-
-        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>() {
+        stage.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void handle(WindowEvent win) {
-                player.stop();
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                VolSlider.setMajorTickUnit(VolSlider.getWidth()<90?0.5:0.2);
+                ButtonMenu.setSpacing((ButtonMenu.getWidth()/30)-5);
+                MusicImage.setFitWidth(coverPanel.getWidth());
+                AnchorPane.setLeftAnchor(coverPanel,mainPanel.getWidth()<=600.0?50.0:150.0);
+                AnchorPane.setRightAnchor(coverPanel,mainPanel.getWidth()<=600.0?50.0:150.0);
+                System.out.println(mainPanel.getWidth());
+                MusicImage.setSmooth(true);
             }
         });
+        stage.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                MusicImage.setFitHeight(coverPanel.getHeight());
+            }
+        });
+        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, _ -> closePlayer());
         player.setRate(1.0);
         player.setVolume(0.5);
 
     }
 
+    public void closePlayer(){
+        player.stop();
+        stage.close();
+    }
+
     public void manageQueueButtons(){
-        System.out.println(Settings.queue.size()+" | "+currindex);
         PrevButton.setDisable(currindex == 0);
         NextButton.setDisable(currindex == Settings.queue.size() - 1);
     }
 
     @FXML
     public void initialize(){
-        SpeedBox.setItems(Settings.speeds);
+        SpeedBox.setItems(Settings.getSpeeds());
         VolSlider.setValue(0.5);
     }
 
@@ -137,7 +139,7 @@ public class MediaController {
         }
     };
 
-    public void Start(int index) throws FileNotFoundException {
+    public void Start(int index){
         try {
 
             if(Settings.queue.isEmpty()){throw new FileNotFoundException();}
@@ -156,14 +158,14 @@ public class MediaController {
         }
 
 
-        NextButton.setOnMouseClicked(event -> {
+        NextButton.setOnMouseClicked(_ -> {
             try {
                 changeIndex(1);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
-        PrevButton.setOnMouseClicked(event -> {
+        PrevButton.setOnMouseClicked(_ -> {
             try {
                 changeIndex(-1);
             } catch (FileNotFoundException e) {
@@ -184,7 +186,7 @@ public class MediaController {
             final String finalTitle = (tag != null && tag.getFirst(FieldKey.TITLE) != null && !tag.getFirst(FieldKey.TITLE).isEmpty()) ? tag.getFirst(FieldKey.TITLE) : new File(filePath).getName();
 
             Platform.runLater(() -> {
-                finTime.setText(prerun.initTime(audioHeader.getTrackLength()));
+                finTime.setText(Settings.initTime(audioHeader.getTrackLength()));
                 this.stage.setTitle(finalTitle);
             });
 
@@ -208,7 +210,7 @@ public class MediaController {
             }
         } catch (Exception e) {
             System.err.println("Błąd podczas odczytu metadanych: " + e.getMessage());
-            e.printStackTrace();
+            Platform.runLater(() -> MusicImage.setImage(no));
         }
     }
 
@@ -285,7 +287,7 @@ public class MediaController {
         currindex = currindex + wy;
         Start(currindex);
     }
-    public void setIndex(int index) throws FileNotFoundException {
+    public void setIndex(int index) {
         player.stop();
         MusicImage.setImage(null);
         Start(index);

@@ -1,14 +1,15 @@
-package sm_player.sm_proj_gebski_11b.JakubGebski;
+package sm_player.sm_proj_gebski_11b.MaciejLewandowski_stare;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PrerunClass implements StaticObjects {
+public class PrerunClass {
     private static String currentpath;
     private ObservableList<Double> speeds = FXCollections.observableArrayList(0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0);
     public String getCurrentpath(){return currentpath;}

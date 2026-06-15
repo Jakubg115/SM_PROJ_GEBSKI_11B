@@ -68,15 +68,15 @@ public class SettingsPage {
             double height= Double.parseDouble(programHeight.getText());
             Settings.setResolution(width<500?500:width,height<300?300:height);
             Settings.setTheme(programTheme.getValue());
-            Settings.Directories.clear();
-            Settings.Directories.add(mainDirPath.getText());
-            Settings.Directories.addAll(folderView.getItems());
+            Settings.setFoldersList(mainDirPath.getText(), folderView.getItems());
             Settings.setmainDir(mainDirPath.getText());
             Settings.saveChanges();
             Settings.setChanges();
         } catch (Exception e) {
             programWidth.setText(""+Settings.getResolution()[0]);
             programHeight.setText(""+Settings.getResolution()[1]);
+            Settings.saveChanges();
+            Settings.setChanges();
         }
 
 
@@ -102,6 +102,6 @@ public class SettingsPage {
     }
 
     public void resetFolderPath(ActionEvent actionEvent) {
-        mainDirPath.setText(Settings.defaultDirPath);
+        mainDirPath.setText(Settings.getDefaultDirPath());
     }
 }

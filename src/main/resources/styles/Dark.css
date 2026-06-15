@@ -1,10 +1,10 @@
 #sidePanel{
     -fx-background-color: #606060;
-    -fx-border-color:lightgray;
+    -fx-border-color: #afafaf;
 }
 .mainPane{
     -fx-background-color: #5e5e5e;
-    -fx-border-color:lightgray;
+    -fx-border-color: #afafaf;
     -fx-border-radius:0;
 }
 .Icons{
@@ -17,7 +17,7 @@
     -fx-background-insets:0;
     -fx-background-radius:5;
     -fx-background-color: #616161;
-    -fx-border-color:lightgray;
+    -fx-border-color: #afafaf;
     -fx-border-radius:5;
     -fx-text-fill:white;
 }
@@ -27,13 +27,18 @@
 }
 .ConcretePage{
     -fx-background-color: #4c4c4c;
+    -fx-border-color:none;
 }
-.folderView,.list-view{
+.folderView{
     -fx-background-color: #757373;
-    -fx-border-color:lightgray;
+    -fx-border-color: #afafaf;
     -fx-border-radius:5;
     -fx-background-insets:0;
     -fx-background-radius:5;
+}
+.list-view{
+    -fx-background-color: #757373;
+    -fx-border-color: #afafaf;
 }
 #library,#settingView, .scroll-pane .viewport{
     -fx-background-color: #3e3c3c;
@@ -97,8 +102,6 @@
 #listEnter:pressed{
     -fx-fill:white;
 }
-
-
 .playerPanel{
     -fx-background-color: #7c7b7b;
 }
@@ -137,7 +140,10 @@
 .choice-box,.combo-box{
     -fx-mark-color: white;
     -fx-background-insets:0;
-    -fx-background-color: #717171;
+    -fx-background-radius:5;
+    -fx-background-color: #9f9f9f;
+    -fx-border-color: #757575;
+    -fx-border-radius:5;
 }
 .combo-box .list-cell{
     -fx-background-color: #4a4a4a;

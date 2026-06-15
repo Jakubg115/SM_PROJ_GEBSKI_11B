@@ -1,12 +1,12 @@
 package sm_player.sm_proj_gebski_11b.JakubGebski;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
 import sm_player.sm_proj_gebski_11b.Components.*;
 import sm_player.sm_proj_gebski_11b.Controllers.MainScreen;
@@ -18,7 +18,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class Settings implements StaticObjects {
+public class Settings {
+
+    private static final List<String> Directories=new LinkedList<>();
+    private static final String configDirPath= "config.txt";
+    private static final LinkedList<AnchorPane> MainPages=new LinkedList<>();
+    private static final LinkedList<FileListCell> fileBranch=new LinkedList<>();
+    private static final ObservableList<Double> speeds = FXCollections.observableArrayList(0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0);
+    private static final ObservableList<String> themes = FXCollections.observableArrayList("Bright","Dark");
+    private static final String defaultDirPath="Główny: src/main/resources/music";
 
     public static LinkedList<String> queue=new LinkedList<>();
 
@@ -74,6 +82,20 @@ public class Settings implements StaticObjects {
 
     public static MainScreen getController(){return mainscreenController;}
 
+    public static ObservableList<Double>getSpeeds(){return speeds;}
+
+    public static boolean isDirectoriesEmpty(){return Directories.isEmpty();}
+
+    public static boolean isBranchesEmpty(){return fileBranch.isEmpty();}
+
+    public static boolean isQueueEmpty(){return queue.isEmpty();}
+
+    public static String getDefaultDirPath(){return defaultDirPath;}
+
+    public static int getBranchSize(){return fileBranch.size();}
+
+    public static MediaController getMediaController(){return mediaController;}
+
     //-------------------------------------settery----------------------------------------//
 
     public static void setController(MainScreen con){mainscreenController=con;}
@@ -88,7 +110,6 @@ public class Settings implements StaticObjects {
             currentTheme="Bright";
             stage.getScene().getStylesheets().add(Objects.requireNonNull(Settings.class.getResource("/styles/" + currentTheme + ".css")).toExternalForm());
         }
-
     }
 
     public static void setTheme(String mode){
@@ -102,16 +123,65 @@ public class Settings implements StaticObjects {
 
     public static void setmainDir(String filepath){
         String[] parsec=filepath.split(": ");
-        if(Directories.isEmpty())
-        {
-            Directories.add(parsec[0]+": "+parsec[1]);
-        }
-        else {Directories.set(0,parsec[0]+": "+parsec[1]);}
+        if(Directories.isEmpty()) Directories.add(parsec[0]+": "+parsec[1]);
+        else Directories.set(0,parsec[0]+": "+parsec[1]);
     }
 
     public static void setProgramName(String name){programName=name;}
 
+    public static void addFileToBranch(FileListCell cell){
+        fileBranch.add(cell);
+        librarypage.initBranchOptions();
+    }
+
+    public static void deleteFileFromBranch(FileListCell cell){
+        fileBranch.remove(cell);
+        if(queue.contains(cell.getFilepath()))
+        {
+            queue.remove(cell.getFilepath());
+            queuepage.updateQueueView();
+        }
+        librarypage.initBranchOptions();
+    }
+
+    public static void addPage(AnchorPane page){
+        MainPages.add(page);
+    }
+
+    public static void setFoldersList(String MainFolder, ObservableList<String> restFolders){
+        clearDirectories();
+        Directories.add(MainFolder);
+        Directories.addAll(restFolders);
+    }
+
+    public static String initTime(int trackLength)
+    {
+        if(trackLength!=0)
+        {
+            int minutes = trackLength / 60;
+            int seconds = trackLength % 60;
+            return String.format("%02d:%02d", minutes, seconds);
+        }
+        return String.format("%02d:%02d", 0, 0);
+    }
+
     //------------------------------operacje do programu------------------------------------//
+
+    public static void clearBranch(){
+        for (FileListCell branch : fileBranch) {
+            branch.checkCell(false);
+        }
+        fileBranch.clear();
+        librarypage.initBranchOptions();
+    }
+
+    public static void clearQueue(){
+        queue.clear();
+    }
+
+    public static void clearDirectories(){
+        Directories.clear();
+    }
 
     public static int addFileToQueue(String filePath){
         if(!queue.contains(filePath)){
@@ -126,14 +196,29 @@ public class Settings implements StaticObjects {
         settingspage.refreshFolderList();
     }
 
+    public static void deleteFolder(String name, String path){
+        int index=Directories.indexOf(name+": "+path);
+        Directories.remove(name+": "+path);
+        librarypage.deleteFolder(index);
+        settingspage.refreshFolderList();
+    }
+
+    public static void changeFolderName(String name, String path, String newName)
+    {
+        int index=Directories.indexOf(name+": "+path);
+        Directories.set(index, newName+": "+path);
+        settingspage.refreshFolderList();
+    }
+
     public static void setChanges(){
         Stage stage=mainscreenController.getStage();
         double[] resolution=getResolution();
         initTheme(stage);
         stage.setWidth(resolution[0]);
         stage.setHeight(resolution[1]);
-        initTheme(mediaPlayerStage);
+        if(mediaPlayerStage != null) initTheme(mediaPlayerStage);
         mainscreenController.setProgramName(getProgramName());
+        librarypage.setLoaded(false);
 
     }
 
@@ -165,6 +250,26 @@ public class Settings implements StaticObjects {
             e.printStackTrace();
         }
 
+    }
+
+    public static void initBranch(){
+        clearQueue();
+        for (FileListCell branch : fileBranch) {
+            queue.add(branch.getFilepath());
+        }
+        queuepage.updateQueueView();
+        openMediaPlayerScene(0);
+        clearBranch();
+    }
+
+    public static void appendQueue(){
+        for(FileListCell branch: fileBranch){
+            String path=branch.getFilepath();
+            addFileToQueue(path);
+        }
+        queuepage.updateQueueView();
+        clearBranch();
+        if(mediaController !=null) mediaController.manageQueueButtons();
     }
 
     //------------------------------Zapis i odczyt pliku------------------------------------//

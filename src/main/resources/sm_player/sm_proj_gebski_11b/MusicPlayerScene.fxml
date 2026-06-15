@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -11,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="CoverPanel" maxHeight="600.0" maxWidth="1000.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.MediaController">
+<AnchorPane fx:id="mainPanel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.MediaController">
    <children>
-      <AnchorPane layoutX="300.0" layoutY="400.0" prefHeight="150.0" prefWidth="800.0" styleClass="playerPanel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="controlssPanel" layoutX="300.0" layoutY="400.0" styleClass="playerPanel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Slider fx:id="PlaybackSlider" blockIncrement="1.0" depthTest="DISABLE" layoutX="18.0" layoutY="7.0" onDragDetected="#OnPlaybackPressed" onMousePressed="#OnPlaybackPressed" onMouseReleased="#OnPlaybackReleased" prefHeight="80.0" prefWidth="766.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
                <padding>
@@ -87,10 +88,14 @@
             </HBox>
          </children>
       </AnchorPane>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+      <AnchorPane fx:id="coverPanel" layoutX="150.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="MusicImage" fitHeight="411.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="MusicImage" fitHeight="150.0" fitWidth="500.0" nodeOrientation="INHERIT" pickOnBounds="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
          </children>
-      </HBox>
+      </AnchorPane>
    </children>
 </AnchorPane>

@@ -2,16 +2,17 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <fx:root fx:id="mainFolderPanel" prefWidth="510.0" styleClass="folderView" type="AnchorPane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.FolderViewController">
    <children>
-      <HBox alignment="CENTER_LEFT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="0.0">
+      <HBox fx:id="controllsBox" alignment="CENTER_LEFT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="0.0">
          <children>
             <FontAwesomeIconView glyphName="FOLDER" size="30" styleClass="Icons">
                <HBox.margin>
@@ -31,10 +32,12 @@
          </children>
       </HBox>
       <ListView fx:id="fileListView" onMouseClicked="#onListClick" prefHeight="0.0" prefWidth="200.0" styleClass="fileList" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-      <Button fx:id="fileOptions" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="40.0" layoutX="509.0" layoutY="14.0" mnemonicParsing="false" onAction="#onOptionsClick" styleClass="ComponentOptions" text=":" textAlignment="CENTER" textOverrun="CLIP" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
+      <MenuButton layoutX="447.0" layoutY="9.0" mnemonicParsing="false" popupSide="LEFT" prefHeight="40.0" text=":" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#changeFolderName" text="zmień nazwę folderu" />
+          <MenuItem mnemonicParsing="false" onAction="#markEveryFile" text="zaznacz wszystko" />
+            <MenuItem mnemonicParsing="false" onAction="#deleteThisFolder" text="usuń ten folder" />
+        </items>
+      </MenuButton>
    </children>
 </fx:root>

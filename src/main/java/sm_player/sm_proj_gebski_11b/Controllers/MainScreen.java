@@ -1,7 +1,9 @@
 package sm_player.sm_proj_gebski_11b.Controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -61,7 +63,7 @@ public class MainScreen {
         FXMLLoader loader=new FXMLLoader(getClass().getResource("/sm_player/sm_proj_gebski_11b/"+component_name+".fxml"));
         try {
             AnchorPane page=loader.load();
-            Settings.MainPages.add(page);
+            Settings.addPage(page);
             AnchorPane.setRightAnchor(page,0.0);
             AnchorPane.setLeftAnchor(page,0.0);
             AnchorPane.setBottomAnchor(page,0.0);
@@ -84,11 +86,21 @@ public class MainScreen {
 
     @FXML
     private void toLibraryPage() {
+
         mainPanel.getChildren().clear();
         Settings.activeIndex=1;
-        System.out.println(Settings.librarypage.loaded);
         mainPanel.getChildren().add(Settings.getPage(Settings.activeIndex));
-        if(!Settings.librarypage.loaded){Settings.librarypage.initFolders();Settings.librarypage.loaded=true;}
+        if(!Settings.librarypage.isLoaded()){
+            stage.getScene().setCursor(Cursor.WAIT);
+            Platform.runLater(()->{
+                Settings.librarypage.initFolders();
+                Settings.librarypage.setLoaded(true);
+                stage.getScene().setCursor(Cursor.DEFAULT);
+            });
+
+
+
+        }
 
     }
 

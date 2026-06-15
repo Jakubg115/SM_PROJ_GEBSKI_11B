@@ -1,6 +1,8 @@
 package sm_player.sm_proj_gebski_11b.Components;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -12,28 +14,45 @@ import java.util.Iterator;
 
 public class LibraryPage {
 
-    public VBox library;
-    public HBox sidebar;
-    public boolean loaded=false;
+    @FXML
+    private MenuButton branchContextChoice;
+    @FXML
+    private Label branchSizeLabel;
+    @FXML
+    private VBox library;
+    @FXML
+    private HBox sidebar;
 
+    private boolean loaded=false;
+
+
+    public boolean isLoaded(){return loaded;}
+
+    public void setLoaded(boolean flag){this.loaded=flag;}
+
+    public void initBranchOptions(){
+        boolean flag=Settings.isBranchesEmpty();
+        sidebar.setVisible(!flag);
+        sidebar.setDisable(flag);
+        if(!flag)
+        {
+            String format=Settings.getBranchSize()+" wybranych";
+            branchSizeLabel.setText(format);
+        }
+
+    }
 
     private void addFolder(String name, String path){
         Iterator<String> it=Settings.getDirectories();
         boolean founded=false;
-        String relpath="";
+        String relpath;
         while (it.hasNext())
         {
-            try {
-                relpath=it.next().split(": ")[1];
-                if(relpath.equals(path)){
-                    founded=true;
-                    break;
-                }
-            }catch (ArrayIndexOutOfBoundsException e){
-                relpath="";
-                continue;
+            relpath=it.next().split(": ")[1];
+            if(relpath.equals(path)){
+                founded=true;
+                break;
             }
-
         }
 
         if(!founded){
@@ -42,7 +61,7 @@ public class LibraryPage {
         }
     }
 
-    public void openFolderChooser(ActionEvent actionEvent) {
+    public void openFolderChooser() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Wybierz folder");
 
@@ -61,24 +80,57 @@ public class LibraryPage {
     }
 
     public void initFolders() {
+        Settings.clearBranch();
         library.getChildren().clear();
         Iterator<String> it=Settings.getDirectories();
         sidebar.setVisible(false);
-        String[] values=new String[]{};
+        sidebar.setDisable(true);
+        String[] values;
         while (it.hasNext()){
             String value=it.next();
             if(!value.isEmpty()){values=value.split(": ");}
             else continue;
 
             if(values.length!=2){
-                if(Settings.Directories.isEmpty()){
-                    Settings.setmainDir(Settings.defaultDirPath);
-                    String[] val=Settings.defaultDirPath.split(": ");
+                if(Settings.isDirectoriesEmpty()){
+                    String defaultpath=Settings.getDefaultDirPath();
+                    Settings.setmainDir(defaultpath);
+                    String[] val=defaultpath.split(": ");
                     library.getChildren().add(new FolderView(val[0],val[1]));
                 }
                 else {break;}
             }
             library.getChildren().add(new FolderView(values[0],values[1]));
+        }
+    }
+
+    public void createAndInsertToNewAlbum() {
+    }
+
+    public void clearBranch() {
+        Settings.clearBranch();
+    }
+
+    public void addToQueue() {
+        Settings.appendQueue();
+    }
+
+    public void loadAlbums() {
+    }
+
+    public void initThisBranch() {
+        Settings.initBranch();
+    }
+
+    public void deleteFolder(int index){
+        FolderView view = (FolderView) library.getChildren().get(index);
+        view.prepareForDelete();
+        library.getChildren().remove(index);
+        if(!Settings.isQueueEmpty()){
+            Settings.openMediaPlayerScene(0);
+        }
+        else {
+            if(Settings.mediaPlayerStage !=null) Settings.getMediaController().closePlayer();
         }
     }
 }

@@ -1,6 +1,6 @@
 package sm_player.sm_proj_gebski_11b.Components;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -8,15 +8,14 @@ import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 public class QueuePage {
-    public ListView<String> queueView=new ListView<>();
-    public Button unShuffleButton;
-    public Button clearButton;
-    public Button shuffleButton;
-    public Button initButton;
-    private LinkedList<String> forShuffle=new LinkedList<>();
+    @FXML
+    private ListView<String> queueView=new ListView<>();
+    @FXML
+    private Button unShuffleButton, clearButton, shuffleButton, initButton;
+
+    private final LinkedList<String> forShuffle=new LinkedList<>();
 
     public void updateQueueView(){
         queueView.getItems().clear();
@@ -26,26 +25,18 @@ public class QueuePage {
         initButton.setDisable(queueView.getItems().isEmpty());
     }
 
+    public void initQueue() {Settings.openMediaPlayerScene(0);}
 
-    public void initQueue(ActionEvent actionEvent) {
-        Settings.openMediaPlayerScene(0);
-
-    }
-
-    public void shuffle(ActionEvent actionEvent) {
+    public void shuffle() {
         if(forShuffle.isEmpty()){
-
             forShuffle.addAll(Settings.queue);
-            System.out.println(forShuffle.size()+" | "+Settings.queue.size());
             unShuffleButton.setDisable(false);
         }
         Collections.shuffle(Settings.queue);
         updateQueueView();
-
-        
     }
 
-    public void resetShuffle(ActionEvent actionEvent) {
+    public void resetShuffle() {
         Settings.queue.clear();
         Settings.queue.addAll(forShuffle);
         updateQueueView();
@@ -54,26 +45,32 @@ public class QueuePage {
     }
 
     public void initMusic(MouseEvent event) {
-        if(event.getClickCount()==2){
-            Settings.openMediaPlayerScene(queueView.getSelectionModel().getSelectedIndex());
-        }
+        if(event.getClickCount()==2){Settings.openMediaPlayerScene(queueView.getSelectionModel().getSelectedIndex());}
     }
 
-    private void addFile(String s){
+    public void addFile(String s){
         Settings.queue.add(s);
         updateQueueView();
     }
 
-    public void clearQueue(ActionEvent actionEvent) {
+    public void clearQueue() {
         String s="";
-        if(Settings.mediaPlayerStage.isShowing())
-        {
+        try {
             s=Settings.getActiveFile();
+            Settings.queue.clear();
+            forShuffle.clear();
+            updateQueueView();
+            if(Settings.mediaPlayerStage.isShowing())
+            {
+                if(!s.isEmpty()) addFile(s);
+                Settings.validateInMediaPlayer();
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Settings.queue.clear();
-        forShuffle.clear();
-        updateQueueView();
-        if(!s.isEmpty()){addFile(s);}
-        Settings.validateInMediaPlayer();
+
+        unShuffleButton.setDisable(true);
     }
 }

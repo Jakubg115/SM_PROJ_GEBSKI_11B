@@ -1,4 +1,4 @@
-package sm_player.sm_proj_gebski_11b.Controllers;
+package sm_player.sm_proj_gebski_11b.MaciejLewandowski_stare;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +15,11 @@ import java.io.File;
 import java.util.*;
 
 import javafx.stage.DirectoryChooser;
+import sm_player.sm_proj_gebski_11b.Controllers.MediaController;
 import sm_player.sm_proj_gebski_11b.JakubGebski.*;
 
 
-public class HelloController extends AnchorPane implements StaticObjects {
+public class HelloController extends AnchorPane {
 
     public VBox asd;
     public List<String> musicFiles;
