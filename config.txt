@@ -1,7 +1,7 @@
 Name: Odtwarzacz MP3
 Width: 800.0
 Height: 600.0
-Theme: Bright
+Theme: Dark
 Directories:{
-Główny: src/main/resources/music
+
 }

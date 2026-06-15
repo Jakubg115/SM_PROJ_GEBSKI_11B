@@ -100,6 +100,15 @@ public class Settings implements StaticObjects {
         height=y;
     }
 
+    public static void setmainDir(String filepath){
+        String[] parsec=filepath.split(": ");
+        if(Directories.isEmpty())
+        {
+            Directories.add(parsec[0]+": "+parsec[1]);
+        }
+        else {Directories.set(0,parsec[0]+": "+parsec[1]);}
+    }
+
     public static void setProgramName(String name){programName=name;}
 
     //------------------------------operacje do programu------------------------------------//
@@ -125,6 +134,7 @@ public class Settings implements StaticObjects {
         stage.setHeight(resolution[1]);
         initTheme(mediaPlayerStage);
         mainscreenController.setProgramName(getProgramName());
+
     }
 
     public static void openMediaPlayerScene(int index){
@@ -216,6 +226,10 @@ public class Settings implements StaticObjects {
                 Directories.add(s);
             }
             else {break;}
+        }
+
+        if(Directories.isEmpty()){
+            Directories.add(defaultDirPath);
         }
 
     }

@@ -86,6 +86,7 @@ public class MainScreen {
     private void toLibraryPage() {
         mainPanel.getChildren().clear();
         Settings.activeIndex=1;
+        System.out.println(Settings.librarypage.loaded);
         mainPanel.getChildren().add(Settings.getPage(Settings.activeIndex));
         if(!Settings.librarypage.loaded){Settings.librarypage.initFolders();Settings.librarypage.loaded=true;}
 

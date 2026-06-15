@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 
+import java.io.File;
 import java.util.List;
 
 public class SettingsPage {
@@ -63,11 +66,12 @@ public class SettingsPage {
 
             double width = Double.parseDouble(programWidth.getText());
             double height= Double.parseDouble(programHeight.getText());
-            Settings.setResolution(width,height);
+            Settings.setResolution(width<500?500:width,height<300?300:height);
             Settings.setTheme(programTheme.getValue());
             Settings.Directories.clear();
             Settings.Directories.add(mainDirPath.getText());
             Settings.Directories.addAll(folderView.getItems());
+            Settings.setmainDir(mainDirPath.getText());
             Settings.saveChanges();
             Settings.setChanges();
         } catch (Exception e) {
@@ -79,6 +83,22 @@ public class SettingsPage {
     }
 
     public void loadFolderPath(ActionEvent actionEvent) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Wybierz folder");
+
+        File selectedDirectory = directoryChooser.showDialog(new Stage());
+        try
+        {
+            if (selectedDirectory != null) {
+                String name= selectedDirectory.getName();
+                String path= selectedDirectory.getAbsolutePath();
+                Settings.setmainDir(name+": "+path);
+            }
+            else throw new RuntimeException();
+        } catch (Exception e) {
+            System.out.println("Folder nie zostal znleziony! Anulacja zadania");
+
+        }
     }
 
     public void resetFolderPath(ActionEvent actionEvent) {

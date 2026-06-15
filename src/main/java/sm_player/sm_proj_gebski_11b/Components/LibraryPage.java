@@ -20,13 +20,20 @@ public class LibraryPage {
     private void addFolder(String name, String path){
         Iterator<String> it=Settings.getDirectories();
         boolean founded=false;
+        String relpath="";
         while (it.hasNext())
         {
-            String relpath=it.next().split(": ")[1];
-            if(relpath.equals(path)){
-                founded=true;
-                break;
+            try {
+                relpath=it.next().split(": ")[1];
+                if(relpath.equals(path)){
+                    founded=true;
+                    break;
+                }
+            }catch (ArrayIndexOutOfBoundsException e){
+                relpath="";
+                continue;
             }
+
         }
 
         if(!founded){
@@ -49,7 +56,7 @@ public class LibraryPage {
             }
             else throw new RuntimeException();
         } catch (Exception e) {
-            System.out.println("Folder nie zostal znleziony! Anulacja zadania");
+            e.printStackTrace();
         }
     }
 
@@ -57,9 +64,20 @@ public class LibraryPage {
         library.getChildren().clear();
         Iterator<String> it=Settings.getDirectories();
         sidebar.setVisible(false);
+        String[] values=new String[]{};
         while (it.hasNext()){
-            String[] values=it.next().split(": ");
-            System.out.println(values[0]+" | "+values[1]);
+            String value=it.next();
+            if(!value.isEmpty()){values=value.split(": ");}
+            else continue;
+
+            if(values.length!=2){
+                if(Settings.Directories.isEmpty()){
+                    Settings.setmainDir(Settings.defaultDirPath);
+                    String[] val=Settings.defaultDirPath.split(": ");
+                    library.getChildren().add(new FolderView(val[0],val[1]));
+                }
+                else {break;}
+            }
             library.getChildren().add(new FolderView(values[0],values[1]));
         }
     }

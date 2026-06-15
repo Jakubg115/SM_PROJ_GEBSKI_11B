@@ -14,12 +14,12 @@ public class FolderView extends AnchorPane {
     private final File folder;
 
     public FolderView(String Foldername, String FolderPath){
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/sm_player/sm_proj_gebski_11b/FolderView.fxml"));
-        loader.setRoot(this);
         this.folder = new File(FolderPath);
 
         try {
             if (this.folder.exists() && this.folder.isDirectory()) {
+                FXMLLoader loader =new FXMLLoader(getClass().getResource("/sm_player/sm_proj_gebski_11b/FolderView.fxml"));
+                loader.setRoot(this);
                 List<String> list = Arrays.stream(Objects.requireNonNull(folder.list((_, name) -> name.endsWith(".mp3") || name.endsWith(".m4a") || name.endsWith(".wav")))).toList();
                 loader.load();
                 FolderViewController controller=loader.getController();
