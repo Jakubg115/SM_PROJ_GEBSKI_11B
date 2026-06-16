@@ -3,5 +3,5 @@ Width: 800.0
 Height: 600.0
 Theme: Bright
 Directories:{
-Główny: src/main/resources/music
+Downloads: C:\Users\Jakubg115\Downloads
 }

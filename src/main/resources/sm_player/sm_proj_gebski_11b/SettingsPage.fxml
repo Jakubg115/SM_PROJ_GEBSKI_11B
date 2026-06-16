@@ -92,7 +92,7 @@
                   </Label>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label prefWidth="140.0" text="Lokalizacja domyślnego folderu" wrapText="true">
+                        <Label prefWidth="140.0" text="Lokalizacja folderu na albumy" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>

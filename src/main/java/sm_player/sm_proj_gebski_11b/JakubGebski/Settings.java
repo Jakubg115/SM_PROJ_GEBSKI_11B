@@ -198,6 +198,7 @@ public class Settings {
 
     public static void deleteFolder(String name, String path){
         int index=Directories.indexOf(name+": "+path);
+        System.out.println("Znaleziony indeks: "+index);
         Directories.remove(name+": "+path);
         librarypage.deleteFolder(index);
         settingspage.refreshFolderList();
@@ -327,15 +328,12 @@ public class Settings {
         {
             s=it.next();
             if(!s.equals("}")){
-                if(s.contains("Directories:{")){continue;}
+                if(s.contains("Directories:{")|| s.isEmpty()) continue;
                 Directories.add(s);
             }
             else {break;}
         }
 
-        if(Directories.isEmpty()){
-            Directories.add(defaultDirPath);
-        }
 
     }
 
@@ -370,12 +368,6 @@ public class Settings {
         programName="Odtwarzacz MP3";
         width=800; height=600;
         currentTheme="Bright";
-        if(Settings.Directories.isEmpty()){
-            Settings.Directories.add(Settings.defaultDirPath);
-        }
-        else {
-            Settings.Directories.set(0,Settings.defaultDirPath);
-        }
 
     }
 

@@ -25,7 +25,6 @@ public class SettingsPage {
         double[] resolution = Settings.getResolution();
         programWidth.setText(resolution[0] + "");
         programHeight.setText(resolution[1] + "");
-        mainDirPath.setText(Settings.getMainDirPath());
         programTheme.setItems(Settings.getThemeLists());
         programTheme.getSelectionModel().select(Settings.getCurrentTheme());
         refreshFolderList();
@@ -41,7 +40,7 @@ public class SettingsPage {
     public void refreshFolderList() {
         folderView.getItems().clear();
         List<String> list = Settings.getSelectedFolders();
-        for (int i = 1; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             folderView.getItems().add(list.get(i));
         }
     }
@@ -50,7 +49,6 @@ public class SettingsPage {
         programName.clear();
         programWidth.clear();
         programHeight.clear();
-        mainDirPath.clear();
     }
 
 

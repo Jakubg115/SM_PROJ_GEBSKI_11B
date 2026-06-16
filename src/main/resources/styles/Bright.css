@@ -5,6 +5,7 @@
 .mainPane{
     -fx-background-color: #e3e3e3;
     -fx-border-color:lightgray;
+    -fx-background-insets:0;
     -fx-border-radius:0;
 }
 .Icons{
@@ -20,7 +21,11 @@
     -fx-border-color:gray;
     -fx-border-radius:5;
 }
-
+.ConcretePage{
+    -fx-background-color: inherit;
+    -fx-border-color:none;
+    -fx-background-insets:0;
+}
 .MainButtons:hover{
     -fx-background-color: #c3c3c3;
 }
@@ -56,6 +61,7 @@
 }
 .list-view{
     -fx-border-color:lightgray;
+    -fx-background-insets:0;
 }
 .ComponentOptions{
     -fx-background-insets:0;
@@ -63,6 +69,14 @@
     -fx-background-radius:0;
     -fx-border-radius:5;
     -fx-border-color:none;
+}
+.text-field{
+    -fx-background-color: #e6e6e6;
+    -fx-text-fill:black;
+    -fx-background-insets:0;
+    -fx-background-radius:5;
+    -fx-border-color:black;
+    -fx-border-radius:5;
 }
 .ComponentOptions:hover{
     -fx-background-color:lightgray;
@@ -133,4 +147,37 @@
 }
 .combo-box .list-cell:even{
     -fx-background-color: #b1b1b1;
+}
+
+#albumPanel{
+    -fx-background-insets:0;
+    -fx-background-radius:5;
+    -fx-border-color:black;
+    -fx-border-radius:5;
+}
+.check-box .box{
+    -fx-background-color:inherit;
+    -fx-background-insets:0;
+    -fx-background-radius:5;
+    -fx-border-color:black;
+    -fx-border-radius:5;
+}
+.check-box:hover .box{
+    -fx-background-color: #8c8c8c;
+    -fx-background-radius:5;
+}
+.check-box:pressed .box, .check-box:selected:pressed .box{
+    -fx-background-color: #434343;
+    -fx-background-radius:5;
+}
+.check-box:selected .mark{
+    -fx-background-color: black;
+}
+.check-box:selected .box{
+    -fx-background-color: #b3b3b3;
+    -fx-background-radius:5;
+}
+
+.menu-button{
+    -fx-background-color: red;
 }

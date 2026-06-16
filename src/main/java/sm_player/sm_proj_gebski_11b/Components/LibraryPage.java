@@ -48,8 +48,12 @@ public class LibraryPage {
         String relpath;
         while (it.hasNext())
         {
-            relpath=it.next().split(": ")[1];
-            if(relpath.equals(path)){
+            relpath=it.next();
+            if(relpath.isEmpty()) continue;
+
+            String pth=relpath.split(": ")[1];
+
+            if(pth.equals(path)){
                 founded=true;
                 break;
             }
@@ -90,16 +94,6 @@ public class LibraryPage {
             String value=it.next();
             if(!value.isEmpty()){values=value.split(": ");}
             else continue;
-
-            if(values.length!=2){
-                if(Settings.isDirectoriesEmpty()){
-                    String defaultpath=Settings.getDefaultDirPath();
-                    Settings.setmainDir(defaultpath);
-                    String[] val=defaultpath.split(": ");
-                    library.getChildren().add(new FolderView(val[0],val[1]));
-                }
-                else {break;}
-            }
             library.getChildren().add(new FolderView(values[0],values[1]));
         }
     }
@@ -123,6 +117,7 @@ public class LibraryPage {
     }
 
     public void deleteFolder(int index){
+        System.out.println(library.getChildren().size()+" | "+index);
         FolderView view = (FolderView) library.getChildren().get(index);
         view.prepareForDelete();
         library.getChildren().remove(index);
