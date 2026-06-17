@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +34,7 @@ public class Settings {
     public static QueuePage queuepage;
     public static AlbumPage albumpage;
     public static SettingsPage settingspage;
+    public static AlbumViewSubPage albumsubpage;
 
     public static int activeIndex=0;
 
@@ -44,7 +46,7 @@ public class Settings {
     private static MediaController mediaController;
     private static MainScreen mainscreenController;
 
-
+    private static AnchorPane albumPageList, albumPageView;
 
 
 
@@ -96,6 +98,10 @@ public class Settings {
     public static MediaController getMediaController(){return mediaController;}
 
     //-------------------------------------settery----------------------------------------//
+
+    public static void setAlbumPageList(AnchorPane pane){albumPageList=pane;}
+
+    public static void setAlbumPageView(AnchorPane pane){albumPageView=pane;}
 
     public static void setController(MainScreen con){mainscreenController=con;}
 
@@ -168,9 +174,11 @@ public class Settings {
     }
 
     public static void addFilesToAlbum(String name, LinkedList<FileListCell> list){
+
         AlbumComponent component=albumpage.getComponent(name);
 
         if(component !=null){
+
             component.copyFilesToAlbum(list);
         }
     }
@@ -282,6 +290,16 @@ public class Settings {
         if(mediaController !=null) mediaController.manageQueueButtons();
     }
 
+    public static void initiateAlbum(LinkedList<String> list){
+        clearQueue();
+        for (String file:list){
+            addFileToQueue(file.split(": ")[1]);
+        }
+        queuepage.updateQueueView();
+        openMediaPlayerScene(0);
+        if(mediaPlayerStage.isShowing()) mediaController.manageQueueButtons();
+    }
+
     public static List<String> readAlbumFolder(){
         File albumObtainator=new File(currentAlbumDirPath);
         List<String> list=new LinkedList<>();
@@ -295,6 +313,19 @@ public class Settings {
     public static void deleteAlbum(String name){
         int index=readAlbumFolder().indexOf(name);
         albumpage.removeAlbum(index);
+    }
+
+    public static void openSubPage(AlbumComponent component){
+        mainscreenController.subPaged=true;
+        albumsubpage.setAlbumName(component.getAlbumName());
+        albumsubpage.setCover(component.getCover());
+        albumsubpage.setList(component.getFiles());
+        mainscreenController.toAlbumPage();
+    }
+
+    public static void closeSubPage(){
+        mainscreenController.subPaged=false;
+        mainscreenController.toAlbumPage();
     }
 
     //------------------------------Zapis i odczyt pliku------------------------------------//

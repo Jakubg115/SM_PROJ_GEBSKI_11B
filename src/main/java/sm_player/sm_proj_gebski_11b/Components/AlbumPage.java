@@ -2,12 +2,15 @@ package sm_player.sm_proj_gebski_11b.Components;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import sm_player.sm_proj_gebski_11b.JakubGebski.Settings;
 import java.util.LinkedList;
 
 public class AlbumPage {
 
+    @FXML
+    private AnchorPane albumPagePanel;
     @FXML
     private FlowPane albumList;
 
@@ -21,6 +24,11 @@ public class AlbumPage {
         new AlbumDialogPane(this,1);
     }
 
+    @FXML
+    public void initialize(){
+        Settings.setAlbumPageList(this.albumPagePanel);
+    }
+
     public void addNewAlbum(String name) {
         albumList.getChildren().add(new AlbumComponent(name));
         Settings.librarypage.loadAlbums();
@@ -32,9 +40,12 @@ public class AlbumPage {
     }
 
     public AlbumComponent getComponent(String name){
+
         for(Node component: albumList.getChildren()){
             if(component instanceof AlbumComponent){
-                if(((AlbumComponent) component).getAlbumName().equals(name)) return (AlbumComponent) component;
+                if(((AlbumComponent) component).getAlbumName().equals(name)){
+                    return (AlbumComponent) component;
+                }
             }
         }
         return null;

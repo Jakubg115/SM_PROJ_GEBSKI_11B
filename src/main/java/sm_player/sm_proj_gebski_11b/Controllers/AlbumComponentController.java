@@ -16,9 +16,12 @@ import sm_player.sm_proj_gebski_11b.Components.AlbumComponent;
 import java.io.File;
 
 public class AlbumComponentController {
-    public MenuButton albumOptions;
-    public FontAwesomeIconView albumPlayButton;
-    public CheckBox albumCheckBox;
+    @FXML
+    private MenuButton albumOptions;
+    @FXML
+    private FontAwesomeIconView albumPlayButton;
+    @FXML
+    private CheckBox albumCheckBox;
     private AlbumComponent pointer;
 
     @FXML
@@ -34,17 +37,26 @@ public class AlbumComponentController {
         this.albumCover.setImage(cover);
         this.albumCover.setFitWidth(100.0);
         this.albumCover.setFitHeight(100.0);
-
     }
 
     public String getName(){return this.albumName.getText();}
 
+    public Image getImage(){return this.albumCover.getImage();}
+
     public void setPointer(AlbumComponent pointer){this.pointer=pointer;}
 
     @FXML
-    private void onClicked(MouseEvent event) {
-
+    private void onClicked(MouseEvent e) {
+        if(e.getClickCount()==2){
+            this.pointer.showViewOfThisAlbum();
+        }
     }
+
+    @FXML
+    private void playThisAlbum() {
+        this.pointer.initThisAlbum();
+    }
+
 
     @FXML
     private void changeAlbumName() {
@@ -80,11 +92,6 @@ public class AlbumComponentController {
     @FXML
     private void deleteAlbum(){
         this.pointer.prepareToDeleteAlbum();
-    }
-
-    @FXML
-    private void playThisAlbum() {
-
     }
 
     @FXML

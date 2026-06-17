@@ -32,9 +32,6 @@ import org.jaudiotagger.tag.datatype.Artwork;
 
 
 public class MediaController {
-
-
-
     // obiekty dla fxml
     @FXML
     private AnchorPane mainPanel, coverPanel;
@@ -151,7 +148,12 @@ public class MediaController {
             initListeners();
             SetMeta(Settings.queue.get(currindex));
             player.setOnReady(onRun);
+            if(pausestate){
+                PauseButton.setText("⏸");
+                switchPauseState();
+            }
             player.play();
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -4,6 +4,4 @@ Height: 600.0
 Theme: Dark
 Albums: src/main/resources/Albums
 Directories:{
-Downloads: C:\Users\Jakubg115\Downloads
-GeometryDash: C:\Users\Jakubg115\AppData\Local\GeometryDash
 }

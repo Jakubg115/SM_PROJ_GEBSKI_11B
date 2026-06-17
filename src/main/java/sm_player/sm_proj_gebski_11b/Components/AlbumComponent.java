@@ -10,15 +10,14 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class AlbumComponent extends VBox {
     private Image cover;
-    private LinkedList<FileListCell> files=new LinkedList<>();
 
-    private LinkedList<String> toRead=new LinkedList<>();
+    private final LinkedList<String> toRead=new LinkedList<>();
     private AlbumComponentController controller=null;
 
     private AlbumComponentController recieveController(){
@@ -38,7 +37,11 @@ public class AlbumComponent extends VBox {
         this.cover=new Image(image);
         this.controller.setAlbumCover(this.cover);
     }
+    public String getAlbumName(){return this.controller.getName();}
 
+    public Image getCover(){return this.controller.getImage();}
+
+    public LinkedList<String> getFiles(){return this.toRead;}
 
 
     public AlbumComponent(int index){
@@ -49,7 +52,10 @@ public class AlbumComponent extends VBox {
         setCoverImage(String.valueOf(getClass().getResource("/No_Cover.jpg")));
 
         File folder=new File(Settings.getAlbumDirectory()+"\\"+getAlbumName());
-        this.toRead.addAll(Arrays.asList(Objects.requireNonNull(folder.list())));
+        for(File files: Objects.requireNonNull(folder.listFiles())){
+            String format=files.getName()+": "+files.getPath();
+            this.toRead.add(format);
+        }
 
     }
 
@@ -65,13 +71,14 @@ public class AlbumComponent extends VBox {
 
 
     public void copyFilesToAlbum(LinkedList<FileListCell> files){
+
         String albumPath=Settings.getAlbumDirectory()+"\\"+getAlbumName();
         for(FileListCell cell: files){
             String name=cell.getFileName();
             try {
 
                 Files.copy(Paths.get(
-                        cell.getFilepath()),
+                                cell.getFilepath()),
                         Paths.get(albumPath+"\\"+name),
                         StandardCopyOption.REPLACE_EXISTING);
 
@@ -82,25 +89,39 @@ public class AlbumComponent extends VBox {
         }
     }
 
-    public String getAlbumName(){return this.controller.getName();}
-
     public AlbumComponent(String name, LinkedList<FileListCell> list){
         if(ifNotExists(name)){
-            this.files=list;
             this.controller=recieveController();
             this.controller.SetName(name);
             this.controller.setPointer(this);
             setCoverImage(String.valueOf(getClass().getResource("/No_Cover.jpg")));
             setToFolder(name);
-            copyFilesToAlbum(this.files);
-            for (FileListCell cell: this.files){
-                toRead.add(cell.getFilepath());
+            copyFilesToAlbum(list);
+            for (FileListCell cell: list){
+                toRead.add(cell.getFileName()+": "+cell.getFilepath());
             }
         }
     }
 
+    public void refreshFileList(){
+        this.toRead.clear();
+        File folder=new File(Settings.getAlbumDirectory()+"\\"+getAlbumName());
+        for(File files: Objects.requireNonNull(folder.listFiles())){
+            this.toRead.add(files.getName()+": "+files.getPath());
+        }
+    }
+
+    public void initThisAlbum(){
+        refreshFileList();
+        if(!this.toRead.isEmpty()) Settings.initiateAlbum(this.toRead);
+    }
+
     private boolean ifNotExists(String name){
         return !Settings.readAlbumFolder().contains(name);
+    }
+
+    public void showViewOfThisAlbum(){
+        Settings.openSubPage(this);
     }
 
     private void setToFolder(String name){

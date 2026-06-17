@@ -22,6 +22,8 @@ public class MainScreen {
     private Stage stage;
     private boolean maximized = false;
 
+    public boolean subPaged=false;
+
 
     @FXML
     public void initialize(){
@@ -31,6 +33,7 @@ public class MainScreen {
         Settings.queuepage=createConcretePage("QueuePage");
         Settings.albumpage=createConcretePage("AlbumPage");
         Settings.settingspage=createConcretePage("SettingsPage");
+        Settings.albumsubpage=createConcretePage("AlbumViewSubPage");
 
         toMainPage();
     }
@@ -94,6 +97,7 @@ public class MainScreen {
             stage.getScene().setCursor(Cursor.WAIT);
             Platform.runLater(()->{
                 Settings.librarypage.initFolders();
+                Settings.albumpage.initAlbums();
                 Settings.librarypage.setLoaded(true);
                 Settings.librarypage.loadAlbums();
                 stage.getScene().setCursor(Cursor.DEFAULT);
@@ -110,19 +114,27 @@ public class MainScreen {
     }
 
     @FXML
-    private void toAlbumPage() {
+    public void toAlbumPage() {
         mainPanel.getChildren().clear();
-        Settings.activeIndex=3;
-        mainPanel.getChildren().add(Settings.getPage(Settings.activeIndex));
-        if(!Settings.albumpage.isLoaded()){
-            stage.getScene().setCursor(Cursor.WAIT);
-            Platform.runLater(()->{
-                Settings.albumpage.initAlbums();
-                Settings.albumpage.setLoaded(true);
-                Settings.librarypage.loadAlbums();
-                stage.getScene().setCursor(Cursor.DEFAULT);
-            });
+        if(subPaged)
+        {
+            Settings.activeIndex=5;
+            mainPanel.getChildren().add(Settings.getPage(Settings.activeIndex));
+        }else {
+            Settings.activeIndex=3;
+            mainPanel.getChildren().add(Settings.getPage(Settings.activeIndex));
+            if(!Settings.albumpage.isLoaded()){
+                stage.getScene().setCursor(Cursor.WAIT);
+                Platform.runLater(()->{
+                    Settings.albumpage.initAlbums();
+                    Settings.albumpage.setLoaded(true);
+                    Settings.librarypage.loadAlbums();
+                    stage.getScene().setCursor(Cursor.DEFAULT);
+                });
+            }
         }
+
+
     }
 
     @FXML
