@@ -1,7 +1,9 @@
 Name: Odtwarzacz MP3
 Width: 800.0
 Height: 600.0
-Theme: Bright
+Theme: Dark
+Albums: src/main/resources/Albums
 Directories:{
 Downloads: C:\Users\Jakubg115\Downloads
+GeometryDash: C:\Users\Jakubg115\AppData\Local\GeometryDash
 }

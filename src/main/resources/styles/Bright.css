@@ -14,7 +14,7 @@
 .label{
     -fx-text-background-color:black;
 }
-.button{
+.button, .menu-button{
     -fx-background-insets:0;
     -fx-background-radius:5;
     -fx-background-color: #cdcdcd;
@@ -178,6 +178,12 @@
     -fx-background-radius:5;
 }
 
-.menu-button{
-    -fx-background-color: red;
+.menu-button:hover{
+    -fx-background-color: #b5b4b4;
+}
+.menu-button .label{
+    -fx-text-fill: black;
+}
+.folderOptions{
+    -fx-border-color:lightgray;
 }

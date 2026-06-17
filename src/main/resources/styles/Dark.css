@@ -2,7 +2,7 @@
     -fx-background-color: #606060;
     -fx-border-color: #afafaf;
 }
-.mainPane{
+.mainPane, #mainPanel{
     -fx-background-color: #5e5e5e;
     -fx-background-insets:0;
     -fx-border-color: #afafaf;
@@ -14,13 +14,16 @@
 .label{
     -fx-text-background-color:white;
 }
-.button{
+.button, .menu-button{
     -fx-background-insets:0;
     -fx-background-radius:5;
     -fx-background-color: #616161;
     -fx-border-color: #afafaf;
     -fx-border-radius:5;
-    -fx-text-fill:white;
+    -fx-text-fill: white;
+}
+.menu-button .label{
+    -fx-text-fill: white;
 }
 
 #windowPanel{
@@ -48,6 +51,18 @@
 .scroll-pane{
     -fx-background-insets:0;
 }
+.scroll-pane .scroll-bar, .list-view .scroll-bar{
+    -fx-background-color: #535353;
+}
+.scroll-pane .scroll-bar .track, .list-view .scroll-bar .track{
+    -fx-background-color: #7c7c7c;
+}
+.scroll-pane .scroll-bar .thumb, .list-view .scroll-bar .thumb{
+    -fx-background-color: #d3d3d3;
+    -fx-border-color: none;
+    -fx-background-insets: 0;
+}
+
 .MainButtons:hover,.button:hover{
     -fx-background-color: #b3b3b3;
 }
@@ -130,9 +145,7 @@
     -fx-background-color: #e1e1e1;
     -fx-text-fill:black;
 }
-#CoverPanel{
-    -fx-background-color: #424242;
-}
+
 .slider .axis{
     -fx-tick-label-fill:white;
 }
@@ -153,17 +166,16 @@
 .combo-box .list-cell:even{
     -fx-background-color: #606060;
 }
-.choice-box .context-menu{
+.choice-box .context-menu, .menu-button .context-menu{
     -fx-background-color: #656363;
 }
-.choice-box .context-menu .label{
+.choice-box .context-menu .label, .menu-button .context-menu .label{
     -fx-text-background-color: white;
 }
 .text-field{
     -fx-background-color: #9f9f9f;
     -fx-text-fill:white;
     -fx-background-insets:0;
-
 }
 
 #albumPanel{
@@ -195,6 +207,12 @@
     -fx-background-radius:5;
 }
 
-.menu-button{
-    -fx-background-color: red;
+.menu-button:hover{
+    -fx-background-color: #cacaca;
+}
+.menu-button .arrow{
+    -fx-background-color: white;
+}
+.folderOptions{
+    -fx-border-color:lightgray;
 }

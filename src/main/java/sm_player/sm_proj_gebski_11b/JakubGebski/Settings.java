@@ -12,10 +12,7 @@ import sm_player.sm_proj_gebski_11b.Components.*;
 import sm_player.sm_proj_gebski_11b.Controllers.MainScreen;
 import sm_player.sm_proj_gebski_11b.Controllers.MediaController;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Settings {
@@ -26,7 +23,8 @@ public class Settings {
     private static final LinkedList<FileListCell> fileBranch=new LinkedList<>();
     private static final ObservableList<Double> speeds = FXCollections.observableArrayList(0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0);
     private static final ObservableList<String> themes = FXCollections.observableArrayList("Bright","Dark");
-    private static final String defaultDirPath="Główny: src/main/resources/music";
+    private static final String defaultAlbumDirPath="src/main/resources/Albums";
+    private static String currentAlbumDirPath;
 
     public static LinkedList<String> queue=new LinkedList<>();
 
@@ -58,11 +56,10 @@ public class Settings {
 
     public static Iterator<String> getDirectories(){return Directories.iterator();}
 
-    public static String getMainDirPath(){return Directories.get(0);}
-
     public static AnchorPane getPage(int index){
         return MainPages.get(index);
     }
+
     public static String getCurrentTheme(){return currentTheme;}
 
     public static ObservableList<String> getThemeLists(){return themes;}
@@ -80,6 +77,10 @@ public class Settings {
 
     public static String getActiveFile(){return mediaController.getActiveFile();}
 
+    public static LinkedList<FileListCell> getFileBranch(){return fileBranch;}
+
+    public static String getAlbumDirectory(){return currentAlbumDirPath;}
+
     public static MainScreen getController(){return mainscreenController;}
 
     public static ObservableList<Double>getSpeeds(){return speeds;}
@@ -89,8 +90,6 @@ public class Settings {
     public static boolean isBranchesEmpty(){return fileBranch.isEmpty();}
 
     public static boolean isQueueEmpty(){return queue.isEmpty();}
-
-    public static String getDefaultDirPath(){return defaultDirPath;}
 
     public static int getBranchSize(){return fileBranch.size();}
 
@@ -121,10 +120,8 @@ public class Settings {
         height=y;
     }
 
-    public static void setmainDir(String filepath){
-        String[] parsec=filepath.split(": ");
-        if(Directories.isEmpty()) Directories.add(parsec[0]+": "+parsec[1]);
-        else Directories.set(0,parsec[0]+": "+parsec[1]);
+    public static void setAlbumDir(String filepath){
+        currentAlbumDirPath=filepath.isEmpty()?defaultAlbumDirPath:filepath;
     }
 
     public static void setProgramName(String name){programName=name;}
@@ -148,10 +145,9 @@ public class Settings {
         MainPages.add(page);
     }
 
-    public static void setFoldersList(String MainFolder, ObservableList<String> restFolders){
+    public static void setFoldersList(ObservableList<String> Folders){
         clearDirectories();
-        Directories.add(MainFolder);
-        Directories.addAll(restFolders);
+        Directories.addAll(Folders);
     }
 
     public static String initTime(int trackLength)
@@ -166,6 +162,18 @@ public class Settings {
     }
 
     //------------------------------operacje do programu------------------------------------//
+
+    public static void addAlbumWithFiles(String name){
+        albumpage.addNewAlbum(name,fileBranch);
+    }
+
+    public static void addFilesToAlbum(String name, LinkedList<FileListCell> list){
+        AlbumComponent component=albumpage.getComponent(name);
+
+        if(component !=null){
+            component.copyFilesToAlbum(list);
+        }
+    }
 
     public static void clearBranch(){
         for (FileListCell branch : fileBranch) {
@@ -220,6 +228,7 @@ public class Settings {
         if(mediaPlayerStage != null) initTheme(mediaPlayerStage);
         mainscreenController.setProgramName(getProgramName());
         librarypage.setLoaded(false);
+        albumpage.setLoaded(false);
 
     }
 
@@ -273,6 +282,21 @@ public class Settings {
         if(mediaController !=null) mediaController.manageQueueButtons();
     }
 
+    public static List<String> readAlbumFolder(){
+        File albumObtainator=new File(currentAlbumDirPath);
+        List<String> list=new LinkedList<>();
+        if(albumObtainator.exists() && albumObtainator.isDirectory())
+        {
+            list.addAll(List.of(Objects.requireNonNull(albumObtainator.list())));
+        }
+        return list;
+    }
+
+    public static void deleteAlbum(String name){
+        int index=readAlbumFolder().indexOf(name);
+        albumpage.removeAlbum(index);
+    }
+
     //------------------------------Zapis i odczyt pliku------------------------------------//
 
     private static void writeFolderPaths(FileWriter file){
@@ -313,6 +337,7 @@ public class Settings {
             result.write("Name: "+programName+"\n");
             writeResolution(result);
             writeCurrentTheme(result);
+            result.write("Albums: "+currentAlbumDirPath+"\n");
             writeFolderPaths(result);
             result.close();
 
@@ -347,6 +372,7 @@ public class Settings {
             width=Double.parseDouble(it.next().split(": ")[1]);
             height=Double.parseDouble(it.next().split(": ")[1]);
             currentTheme=it.next().split(": ")[1];
+            currentAlbumDirPath=it.next().split(": ")[1];
             lookForFolders(it);
 
         } catch (FileNotFoundException e) {
@@ -368,6 +394,7 @@ public class Settings {
         programName="Odtwarzacz MP3";
         width=800; height=600;
         currentTheme="Bright";
+        currentAlbumDirPath=defaultAlbumDirPath;
 
     }
 

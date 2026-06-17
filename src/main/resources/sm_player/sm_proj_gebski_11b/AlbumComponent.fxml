@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="albumPanel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClicked" spacing="5.0" type="VBox" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.AlbumComponentController">
+<fx:root fx:id="albumPanel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClicked" prefWidth="140.0" spacing="5.0" type="VBox" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm_player.sm_proj_gebski_11b.Controllers.AlbumComponentController">
    <children>
       <AnchorPane VBox.vgrow="NEVER">
          <children>
@@ -36,7 +36,7 @@
                </font></CheckBox>
             <Button layoutX="4.0" layoutY="134.0" mnemonicParsing="false" onAction="#playThisAlbum" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
                <graphic>
-                  <FontAwesomeIconView fx:id="albumPlayButton" glyphName="PLAY" />
+                  <FontAwesomeIconView fx:id="albumPlayButton" glyphName="PLAY" styleClass="Icons" />
                </graphic>
                <font>
                   <Font size="10.0" />

@@ -1,8 +1,11 @@
 package sm_player.sm_proj_gebski_11b.Components;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -99,6 +102,7 @@ public class LibraryPage {
     }
 
     public void createAndInsertToNewAlbum() {
+        new AlbumDialogPane(Settings.albumpage,2);
     }
 
     public void clearBranch() {
@@ -109,7 +113,37 @@ public class LibraryPage {
         Settings.appendQueue();
     }
 
+    private void clearAlbumsList(){
+        int size=branchContextChoice.getItems().size();
+        if(size>=3) branchContextChoice.getItems().remove(2,size);
+    }
+
+
     public void loadAlbums() {
+
+        clearAlbumsList();
+        File albumSearcher=new File(Settings.getAlbumDirectory());
+
+        String[] founded=albumSearcher.list();
+        for(String album:founded){
+            MenuItem item=new MenuItem(album);
+            item.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Settings.addFilesToAlbum(item.getText(),Settings.getFileBranch());
+                }
+            });
+            branchContextChoice.getItems().add(item);
+        }
+        MenuItem addAlbum=new MenuItem("Dodaj album +");
+        addAlbum.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createAndInsertToNewAlbum();
+            }
+        });
+        branchContextChoice.getItems().add(addAlbum);
+
     }
 
     public void initThisBranch() {

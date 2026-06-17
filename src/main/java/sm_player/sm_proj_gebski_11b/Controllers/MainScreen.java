@@ -95,11 +95,9 @@ public class MainScreen {
             Platform.runLater(()->{
                 Settings.librarypage.initFolders();
                 Settings.librarypage.setLoaded(true);
+                Settings.librarypage.loadAlbums();
                 stage.getScene().setCursor(Cursor.DEFAULT);
             });
-
-
-
         }
 
     }
@@ -116,6 +114,15 @@ public class MainScreen {
         mainPanel.getChildren().clear();
         Settings.activeIndex=3;
         mainPanel.getChildren().add(Settings.getPage(Settings.activeIndex));
+        if(!Settings.albumpage.isLoaded()){
+            stage.getScene().setCursor(Cursor.WAIT);
+            Platform.runLater(()->{
+                Settings.albumpage.initAlbums();
+                Settings.albumpage.setLoaded(true);
+                Settings.librarypage.loadAlbums();
+                stage.getScene().setCursor(Cursor.DEFAULT);
+            });
+        }
     }
 
     @FXML

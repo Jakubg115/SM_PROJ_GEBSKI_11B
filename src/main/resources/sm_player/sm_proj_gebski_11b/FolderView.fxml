@@ -32,7 +32,7 @@
          </children>
       </HBox>
       <ListView fx:id="fileListView" onMouseClicked="#onListClick" prefHeight="0.0" prefWidth="200.0" styleClass="fileList" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-      <MenuButton layoutX="447.0" layoutY="9.0" mnemonicParsing="false" popupSide="LEFT" prefHeight="40.0" text=":" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuButton layoutX="447.0" layoutY="9.0" mnemonicParsing="false" popupSide="LEFT" prefHeight="40.0" styleClass="folderOptions" text=":" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#changeFolderName" text="zmień nazwę folderu" />
           <MenuItem mnemonicParsing="false" onAction="#markEveryFile" text="zaznacz wszystko" />

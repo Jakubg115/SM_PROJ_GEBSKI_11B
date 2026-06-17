@@ -11,13 +11,13 @@ import java.util.LinkedList;
 
 public class QueuePage {
     @FXML
-    private ListView<String> queueView=new ListView<>();
+    private ListView<String> queueView = new ListView<>();
     @FXML
     private Button unShuffleButton, clearButton, shuffleButton, initButton;
 
-    private final LinkedList<String> forShuffle=new LinkedList<>();
+    private final LinkedList<String> forShuffle = new LinkedList<>();
 
-    public void updateQueueView(){
+    public void updateQueueView() {
         queueView.getItems().clear();
         queueView.getItems().setAll(Settings.getActiveQueue());
         shuffleButton.setDisable(queueView.getItems().isEmpty());
@@ -25,10 +25,12 @@ public class QueuePage {
         initButton.setDisable(queueView.getItems().isEmpty());
     }
 
-    public void initQueue() {Settings.openMediaPlayerScene(0);}
+    public void initQueue() {
+        Settings.openMediaPlayerScene(0);
+    }
 
     public void shuffle() {
-        if(forShuffle.isEmpty()){
+        if (forShuffle.isEmpty()) {
             forShuffle.addAll(Settings.queue);
             unShuffleButton.setDisable(false);
         }
@@ -45,30 +47,31 @@ public class QueuePage {
     }
 
     public void initMusic(MouseEvent event) {
-        if(event.getClickCount()==2){Settings.openMediaPlayerScene(queueView.getSelectionModel().getSelectedIndex());}
+        if (event.getClickCount() == 2) {
+            Settings.openMediaPlayerScene(queueView.getSelectionModel().getSelectedIndex());
+        }
     }
 
-    public void addFile(String s){
+    public void addFile(String s) {
         Settings.queue.add(s);
         updateQueueView();
     }
 
     public void clearQueue() {
-        String s="";
+        String s = "";
         try {
-            s=Settings.getActiveFile();
+            if (Settings.getMediaController() != null) s = Settings.getActiveFile();
             Settings.queue.clear();
             forShuffle.clear();
             updateQueueView();
-            if(Settings.mediaPlayerStage.isShowing())
-            {
-                if(!s.isEmpty()) addFile(s);
+            if (Settings.mediaPlayerStage.isShowing()) {
+                if (!s.isEmpty()) addFile(s);
                 Settings.validateInMediaPlayer();
             }
 
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Nie zalaczono okna odtwarzacza. Kontynuowanie operacji");
         }
 
         unShuffleButton.setDisable(true);

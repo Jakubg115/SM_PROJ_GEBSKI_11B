@@ -46,11 +46,10 @@
                   <Insets />
                </HBox.margin>
             </Button>
-            <MenuButton fx:id="branchContextChoice" mnemonicParsing="false" onAction="#loadAlbums" text="Dodaj do">
+            <MenuButton fx:id="branchContextChoice" mnemonicParsing="false" text="Dodaj do">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#addToQueue" text="Kolejki odtwarzania" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem mnemonicParsing="false" onAction="#createAndInsertToNewAlbum" text="Nowy album +" />
               </items>
             </MenuButton>
             <Button mnemonicParsing="false" onAction="#clearBranch" text="Wyczyść" />

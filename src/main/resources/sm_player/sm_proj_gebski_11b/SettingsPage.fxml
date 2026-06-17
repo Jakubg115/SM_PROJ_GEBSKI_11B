@@ -100,17 +100,16 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="mainDirPath">
+                        <TextField fx:id="mainAlbumPath">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" onAction="#loadFolderPath" text="Wczytaj z folderu">
+                        <Button mnemonicParsing="false" onAction="#loadAlbumFolderPath" text="Wczytaj z folderu">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#resetFolderPath" text="Reset" />
                      </children>
                   </HBox>
                   <HBox>

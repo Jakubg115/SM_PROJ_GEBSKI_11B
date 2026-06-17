@@ -24,6 +24,6 @@
             </FlowPane>
          </content>
       </ScrollPane>
-      <Button layoutX="427.0" layoutY="22.0" mnemonicParsing="false" onAction="#addNewAlbum" text="Dodaj album" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="12.0" />
+      <Button layoutX="427.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAddClick" text="Dodaj album" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="12.0" />
    </children>
 </AnchorPane>
