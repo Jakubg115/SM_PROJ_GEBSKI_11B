@@ -1,7 +1,7 @@
-Name: Odtwarzacz MP3
-Width: 800.0
-Height: 600.0
-Theme: Dark
+Name: Nowa nazwa
+Width: 1000.0
+Height: 800.0
+Theme: Bright
 Albums: src/main/resources/Albums
 Directories:{
 }

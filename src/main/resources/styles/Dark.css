@@ -3,7 +3,7 @@
     -fx-border-color: #afafaf;
 }
 .mainPane, #mainPanel{
-    -fx-background-color: #5e5e5e;
+    -fx-background-color: #323232;
     -fx-background-insets:0;
     -fx-border-color: #afafaf;
     -fx-border-radius:0;
@@ -120,7 +120,7 @@
     -fx-fill:white;
 }
 .playerPanel{
-    -fx-background-color: #7c7b7b;
+    -fx-background-color: #535353;
 }
 .queueButtons{
     -fx-background-insets:0;
@@ -215,4 +215,20 @@
 }
 .folderOptions{
     -fx-border-color:lightgray;
+}
+.slider{
+    -fx-background-insets: 0;
+}
+.slider .track{
+    -fx-background-insets: 0;
+    -fx-background-color: #676767;
+}
+.slider .thumb{
+    -fx-background-color: #a1a1a1;
+    -fx-pref-height: 10px;
+    -fx-pref-width: 10px;
+}
+.slider .thumb:hover{
+    -fx-pref-height: 20px;
+    -fx-pref-width: 20px;
 }

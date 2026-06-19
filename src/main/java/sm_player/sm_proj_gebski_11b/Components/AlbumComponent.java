@@ -85,8 +85,8 @@ public class AlbumComponent extends VBox {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         }
+        refreshFileList();
     }
 
     public AlbumComponent(String name, LinkedList<FileListCell> list){
